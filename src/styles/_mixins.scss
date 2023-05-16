@@ -1,0 +1,16 @@
+@import '_variables.scss';
+
+@mixin typography($fw, $fs, $lh) {
+  font-style: normal;
+  font-weight: $fw;
+  font-size: #{$fs}px;
+  line-height: #{$lh}px;
+  white-space: pre-line;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // @media (max-width: 768px) {
+  //   font-size: #{$fs * $unit_mobile}vw;
+  //   line-height: #{$lh * $unit_mobile}vw;
+  // }
+}

@@ -1,0 +1,22 @@
+@mixin category_item {
+  background: #ffffff;
+  border-radius: 8px;
+  height: #{52}px;
+  padding: 0 #{10}px;
+  cursor: pointer;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+.category-item {
+  @include category_item;
+  color: #002229;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+
+.category-item-active {
+  @include category_item;
+  color: #038ca9;
+  border: 1px solid #038ca9;
+}

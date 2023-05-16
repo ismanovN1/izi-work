@@ -1,0 +1,4 @@
+export const REGISTRATION = 'REGISTRATION';
+export const AUTHORIZATION = 'AUTHORIZATION';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const EDIT_USER = 'EDIT_USER';

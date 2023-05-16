@@ -1,0 +1,114 @@
+.d-flex {
+  display: flex;
+}
+
+.fdr {
+  display: flex;
+  flex-direction: row;
+}
+
+.fdc {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.space-b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.space-a {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.f-end {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.jcs {
+  justify-content: flex-start;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.jce {
+  justify-content: flex-end;
+}
+.jcsb {
+  justify-content: space-between;
+}
+
+.aic {
+  align-items: center;
+}
+
+.aib {
+  align-items: baseline;
+}
+
+.aie {
+  align-items: flex-end;
+}
+
+.ais {
+  align-items: stretch;
+}
+
+.aifs {
+  align-items: flex-start;
+}
+
+.ass {
+  align-self: stretch;
+}
+
+.f-nowrap {
+  flex-wrap: nowrap;
+}
+
+.f-wrap {
+  flex-wrap: wrap;
+}
+
+.f-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+.full-w {
+  width: 100%;
+}
+
+.full-h {
+  height: 100%;
+}
+
+@for $i from 0 through 5 {
+  .f-shrink-#{$i} {
+    flex-shrink: $i;
+  }
+
+  .f-grow-#{$i} {
+    flex-grow: $i;
+  }
+
+  .flex-#{$i} {
+    flex: $i;
+  }
+}

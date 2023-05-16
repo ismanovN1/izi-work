@@ -1,0 +1,423 @@
+@import '_variables';
+@import 'flex';
+@import 'typography';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus {
+  outline: none;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $bright_grey;
+  overflow: auto;
+}
+
+a {
+  text-decoration: none;
+  &:link {
+    text-decoration: none;
+  }
+  &:visited {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  &:active {
+    text-decoration: none;
+  }
+}
+
+@mixin spacing($val) {
+  @for $i from 1 through 100 {
+    .w-#{$i}u {
+      width: #{$i * $val}vw;
+    }
+    .h-#{$i}u {
+      height: #{$i * $val}vw;
+    }
+    .w-#{$i} {
+      width: #{$i}px;
+    }
+    .h-#{$i} {
+      height: #{$i}px;
+    }
+
+    .round-#{$i} {
+      height: #{$i}px;
+      width: #{$i}px;
+      border-radius: 50%;
+    }
+    .br-#{$i} {
+      border-radius: #{$i}px;
+    }
+
+    .bw-#{$i} {
+      border-width: #{$i}px;
+    }
+
+    .ml-#{$i} {
+      margin-left: #{$i}px;
+    }
+    .pl-#{$i} {
+      padding-left: #{$i}px;
+    }
+    .mt-#{$i} {
+      margin-top: #{$i}px;
+    }
+    .pt-#{$i} {
+      padding-top: #{$i}px;
+    }
+    .mr-#{$i} {
+      margin-right: #{$i}px;
+    }
+    .pr-#{$i} {
+      padding-right: #{$i}px;
+    }
+    .mb-#{$i} {
+      margin-bottom: #{$i}px;
+    }
+    .pb-#{$i} {
+      padding-bottom: #{$i}px;
+    }
+    .ml-#{$i}u {
+      margin-left: #{$i * $val}vw;
+    }
+    .pl-#{$i}u {
+      padding-left: #{$i * $val}vw;
+    }
+    .mt-#{$i}u {
+      margin-top: #{$i * $val}vw;
+    }
+    .m-#{$i} {
+      margin: #{$i}px;
+    }
+    .p-#{$i} {
+      padding: #{$i}px;
+    }
+    .m-#{$i}u {
+      margin: #{$i * $val}vw;
+    }
+    .p-#{$i}u {
+      padding: #{$i * $val}vw;
+    }
+    .pt-#{$i}u {
+      padding-top: #{$i * $val}vw;
+    }
+    .mr-#{$i}u {
+      margin-right: #{$i * $val}vw;
+    }
+    .pr-#{$i}u {
+      padding-right: #{$i * $val}vw;
+    }
+    .mb-#{$i}u {
+      margin-bottom: #{$i * $val}vw;
+    }
+    .pb-#{$i}u {
+      padding-bottom: #{$i * $val}vw;
+    }
+    .mh-#{$i}u {
+      margin-right: #{$i * $val}vw;
+      margin-left: #{$i * $val}vw;
+    }
+    .ph-#{$i}u {
+      padding-right: #{$i * $val}vw;
+      padding-left: #{$i * $val}vw;
+    }
+    .mv-#{$i}u {
+      margin-top: #{$i * $val}vw;
+      margin-bottom: #{$i * $val}vw;
+    }
+    .pv-#{$i}u {
+      padding-top: #{$i * $val}vw;
+      padding-bottom: #{$i * $val}vw;
+    }
+    .mh-#{$i} {
+      margin-right: #{$i}px;
+      margin-left: #{$i}px;
+    }
+    .ph-#{$i} {
+      padding-right: #{$i}px;
+      padding-left: #{$i}px;
+    }
+    .mv-#{$i} {
+      margin-top: #{$i}px;
+      margin-bottom: #{$i}px;
+    }
+    .pv-#{$i} {
+      padding-top: #{$i}px;
+      padding-bottom: #{$i}px;
+    }
+    .lh-#{$i} {
+      line-height: #{$i}px;
+    }
+    .zi-#{$i} {
+      z-index: $i;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  @include spacing($unit_mobile);
+
+  .footer {
+    > div {
+      padding-left: 16px;
+    }
+    .social {
+      width: 100%;
+      margin-top: 30px;
+
+      .jce {
+        justify-content: start;
+      }
+      .t-align-right {
+        text-align: left;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  @include spacing($unit);
+}
+
+.ph-125 {
+  padding-left: 125px;
+  padding-right: 125px;
+}
+
+.bg-blue {
+  background-color: $blue;
+}
+.bg-green {
+  background-color: $green;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+.d-inline-block {
+  display: inline-block;
+}
+
+.bg-black {
+  background-color: $black;
+}
+.bg-bright_grey {
+  background-color: $bright_grey;
+}
+.bg-grey {
+  background-color: $grey;
+}
+.bg-light-grey {
+  background-color: $light_grey;
+}
+.bg-ghost {
+  background-color: $ghost;
+}
+.bg-red {
+  background-color: $red;
+}
+.bg-white {
+  background-color: $white;
+}
+
+.bc-blue {
+  border: solid 1px $blue;
+}
+.bc-green {
+  border: solid 1px $green;
+}
+.bc-black {
+  border: solid 1px $black;
+}
+.bc-bright_grey {
+  border: solid 1px $bright_grey;
+}
+.bc-grey {
+  border: solid 1px $grey;
+}
+.bc-light-grey {
+  border: solid 1px $light_grey;
+}
+.bc-ghost {
+  border: solid 1px $ghost;
+}
+.bc-red {
+  border: solid 1px $red;
+}
+.bc-white {
+  border: solid 1px $white;
+}
+.bs-dashed {
+  border-style: dashed;
+}
+
+.bs-doted {
+  border-style: doted;
+}
+
+.opc-01 {
+  opacity: 0.1;
+}
+.opc-02 {
+  opacity: 0.2;
+}
+.opc-03 {
+  opacity: 0.3;
+}
+.opc-04 {
+  opacity: 0.4;
+}
+.opc-05 {
+  opacity: 0.5;
+}
+.opc-06 {
+  opacity: 0.6;
+}
+.opc-07 {
+  opacity: 0.7;
+}
+.opc-08 {
+  opacity: 0.8;
+}
+.opc-08 {
+  opacity: 0.8;
+}
+.opc-1 {
+  opacity: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ovf-hidden {
+  overflow: hidden;
+}
+.ovf-auto {
+  overflow: auto;
+}
+.ovf-scroll {
+  overflow: scroll;
+}
+.ovf-visible {
+  overflow: visible;
+}
+
+.ovf-y-hidden {
+  overflow-y: hidden;
+}
+.ovf-y-auto {
+  overflow-y: auto;
+}
+.ovf-y-scroll {
+  overflow-y: scroll;
+}
+.ovf-y-visible {
+  overflow-y: visible;
+}
+
+.ovf-x-hidden {
+  overflow-x: hidden;
+}
+.ovf-x-auto {
+  overflow-x: auto;
+}
+.ovf-x-scroll {
+  overflow-x: scroll;
+}
+.ovf-x-visible {
+  overflow-x: visible;
+}
+
+.box-sizing-border-box {
+  box-sizing: border-box;
+}
+
+.scroll_bar_usual {
+  &::-webkit-scrollbar {
+    width: 7px;
+    margin-left: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #d5dede;
+    border-left: 3px solid white;
+    border-right: px solid white;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #038ca9;
+  }
+}
+
+.hide-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.control-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav_bar_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  width: 100%;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+  -moz-box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+  box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+  z-index: 10;
+  transition: top 0.3s;
+
+  @media (max-width: 768px) {
+    height: 65px;
+  }
+}
+
+.VacancyPhoto {
+  border-radius: 0px 0px 8px 8px;
+}

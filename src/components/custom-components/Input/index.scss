@@ -1,0 +1,43 @@
+.input-container {
+  border: 1px solid #d5dede;
+  height: #{52}px;
+  width: 100%;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+
+  input {
+    flex: 1;
+    padding: 0;
+    border: none;
+
+    &::-webkit-input-placeholder {
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+
+    &::-ms-input-placeholder {
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+
+    &::placeholder {
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+  }
+
+  .left-icon {
+    margin-right: #{10}px;
+  }
+  .right-icon {
+    margin-left: #{10}px;
+  }
+}

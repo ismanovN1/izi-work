@@ -1,0 +1,75 @@
+@media (min-width: 1120px) {
+  .menu-container {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .menu-button {
+    display: none;
+    cursor: pointer;
+  }
+}
+
+.close-button {
+  display: none;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 1120px) {
+  .nav-bar-inner-container {
+    padding: 0 16px;
+  }
+  .menu-container {
+    position: fixed;
+    color: white;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    display: none;
+    flex-direction: column;
+    padding-left: 24px;
+    -webkit-box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+    -moz-box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+    box-shadow: 0px 0px 20px 20px rgba(0, 34, 30, 0.05);
+
+    .bg-light-grey {
+      display: none;
+    }
+
+    > a,
+    > div {
+      height: 40px;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+      background: white;
+      width: fit-content;
+      span {
+        color: black !important;
+      }
+
+      > svg {
+        path {
+          fill: rgba(3, 140, 169, 1);
+        }
+      }
+    }
+
+    .close-button {
+      display: block;
+      z-index: 10;
+    }
+  }
+
+  .menu-button {
+    display: block;
+  }
+}

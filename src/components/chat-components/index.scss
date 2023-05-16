@@ -1,0 +1,62 @@
+.my-message-container {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .my-message-inner-container {
+    width: fit-content;
+    min-width: 110px;
+    padding: 10px 17px 5px 10px;
+    background: #038ca91a;
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vector {
+    height: 100%;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+    div {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 25px 15px 0 0;
+      border-color: #038ca91a transparent transparent transparent;
+    }
+  }
+}
+
+.me-message-container {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+
+  .my-message-inner-container {
+    width: fit-content;
+    min-width: 110px;
+    padding: 10px 17px 5px 10px;
+    background: #d5dede4d;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vector {
+    height: 100%;
+    border-top-left-radius: 10px;
+    overflow: hidden;
+    div {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 15px 25px 0;
+      border-color: transparent #038ca91a transparent transparent;
+    }
+  }
+}

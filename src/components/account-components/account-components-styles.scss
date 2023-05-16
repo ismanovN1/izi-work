@@ -1,0 +1,41 @@
+.account-card {
+  background: #ffffff;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  width: 100%;
+  height: 268px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+
+  .info-area {
+    flex-grow: 1;
+    padding: 17px 20px;
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 19px;
+      flex-shrink: 0;
+    }
+  }
+
+  .buttons-area {
+    height: 52px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid #d5dede;
+
+    .wall {
+      width: 1px;
+      background-color: #d5dede;
+    }
+  }
+}

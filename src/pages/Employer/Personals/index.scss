@@ -1,0 +1,52 @@
+.personals-filter-bar {
+  .button-primary {
+    svg {
+      display: none;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .personals-filter-bar {
+    .button-outline,
+    .button-primary {
+      flex-shrink: 1;
+    }
+
+    .input-container {
+      flex-shrink: 0;
+      min-width: 180px;
+      margin: 0 12px;
+    }
+  }
+
+  .personals {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .personals-filter-bar {
+    .button-outline,
+    .button-primary {
+      width: 44px !important;
+      flex-shrink: 0 !important;
+      span {
+        display: none;
+      }
+      svg {
+        display: block;
+      }
+    }
+
+    .input-container {
+      svg {
+        display: none;
+      }
+    }
+  }
+}

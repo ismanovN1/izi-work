@@ -1,0 +1,58 @@
+.textarea-container {
+  border: 1px solid #d5dede;
+  height: #{52}px;
+  width: 100%;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  textarea {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    font-family: 'Roboto' sans-serif;
+    font-size: 18;
+    font-weight: 400;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+    &::-webkit-scrollbar {
+      display: none;
+      height: 100%;
+    }
+    -ms-overflow-style: none;
+    &::-webkit-input-placeholder {
+      font-family: 'Roboto' sans-serif;
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+
+    &::-ms-input-placeholder {
+      font-family: 'Roboto' sans-serif;
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+
+    &::placeholder {
+      font-family: 'Roboto' sans-serif;
+      color: rgba(134, 143, 144, 0.7);
+      font-size: #{16}px;
+      font-weight: 400;
+    }
+  }
+
+  .left-icon {
+    margin-right: #{10}px;
+  }
+  .right-icon {
+    margin-left: #{10}px;
+  }
+}

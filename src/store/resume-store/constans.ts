@@ -1,0 +1,6 @@
+export const CREATE_RESUME = 'CREATE_RESUME';
+export const GET_MY_RESUME = 'GET_MY_RESUME';
+export const GET_RESUMES = 'GET_RESUMES';
+export const GET_RESUME_BY_ID = 'GET_RESUME_BY_ID';
+export const DELETE_RESUME = 'DELETE_RESUME';
+export const UPDATE_RESUME = 'UPDATE_RESUME';

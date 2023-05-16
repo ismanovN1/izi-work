@@ -1,0 +1,214 @@
+@import '_mixins.scss';
+@import './variables.scss';
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(../assets/fonts/Roboto-Black.ttf);
+  font-weight: 900;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url(../assets/fonts/Roboto-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url(../assets/fonts/Roboto-Medium.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url(../assets/fonts/Roboto-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url(../assets/fonts/Roboto-Thin.ttf);
+  font-weight: 300;
+}
+
+.H1 {
+  @include typography(900, 40, 47);
+  @media (max-width: 768px) {
+    @include typography(900, 34, 40);
+  }
+}
+
+.H2 {
+  @include typography(700, 30, 24);
+}
+
+.H3 {
+  @include typography(600, 26, 23);
+}
+
+.BodyBlack {
+  @include typography(900, 20, 23);
+}
+
+.BodyB {
+  @include typography(700, 20, 23);
+}
+
+.BodyM {
+  @include typography(500, 20, 23.44);
+}
+
+.Body {
+  @include typography(400, 20, 23);
+}
+
+.SubtitleBlack {
+  @include typography(900, 18, 21);
+}
+.SubtitleB {
+  @include typography(700, 18, 24);
+}
+
+.SubtitleM {
+  @include typography(500, 18, 21);
+}
+
+.Subtitle {
+  @include typography(400, 18, 24);
+}
+
+.SubtitleL {
+  @include typography(300, 18, 24);
+}
+
+.Button {
+  @include typography(700, 18, 21);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  white-space: pre-line;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.DescriptionBlack {
+  @include typography(900, 16, 19);
+}
+
+.DescriptionB {
+  @include typography(700, 16, 18.75);
+}
+
+.DescriptionM {
+  @include typography(500, 16, 24);
+}
+
+.Description {
+  @include typography(400, 14, 16);
+}
+
+.DescriptionL {
+  @include typography(300, 14, 18.75);
+}
+
+.SmallB {
+  @include typography(700, 14, 16);
+}
+
+.SmallM {
+  @include typography(500, 14, 16);
+}
+
+.Small {
+  @include typography(400, 14, 16);
+}
+
+.SmallL {
+  @include typography(300, 14, 24);
+}
+
+.SmallestM {
+  @include typography(500, 12, 14);
+}
+
+.Smallest {
+  @include typography(400, 12, 14);
+}
+
+.SmallestL {
+  @include typography(300, 12, 14);
+}
+
+.ExtraSmallM {
+  @include typography(500, 10, 12);
+}
+
+.color-blue {
+  color: $blue;
+}
+.color-black {
+  color: $black;
+}
+.color-bright_grey {
+  color: $bright_grey;
+}
+.color-grey {
+  color: $grey;
+}
+.color-red {
+  color: $red;
+}
+.color-white {
+  color: $white;
+}
+.color-inactive {
+  color: $inactive;
+}
+
+.t-align-left {
+  text-align: left;
+}
+.t-align-center {
+  text-align: center;
+}
+.t-align-justify {
+  text-align: justify;
+}
+.t-align-right {
+  text-align: right;
+}
+
+.white-space-nowrap {
+  white-space: nowrap;
+}
+
+.white-space-pre {
+  white-space: pre;
+}
+
+.white-space-pre-line {
+  white-space: pre-line;
+}
+
+.white-space-pre-wrap {
+  white-space: pre-wrap;
+}
+
+.text-decoration-underline {
+  text-decoration: underline;
+}
+
+.text-decoration-dashed {
+  text-decoration: dashed;
+}
+
+.text-decoration-overline {
+  text-decoration: overline;
+}
+.text-decoration-dotted {
+  text-decoration: dotted;
+}
+.text-decoration-solid {
+  text-decoration: solid;
+}
+
+span {
+  display: inline-block;
+}

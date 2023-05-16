@@ -1,0 +1,43 @@
+@mixin button {
+  width: 100%;
+  height: #{52}px;
+  border-radius: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+
+  .left-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: #{10}px;
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.button-primary {
+  @include button;
+  background: #038ca9;
+  color: white;
+}
+
+.button-outline {
+  @include button;
+  background: #ffffff;
+  color: #038ca9;
+  border: 1px solid #038ca9;
+}
+
+.button-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  &:active {
+    opacity: 0.6 !important;
+  }
+}
+
+.button_white_shadow {
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+}
