@@ -95,7 +95,7 @@ const CandidateCard: React.FC<propsType> = ({ data }) => {
             <View class_name="fdc mt-28">
               <Text DescriptionM>{data?.resume_id?.category_name}</Text>
               <Text Description class_name="mt-5">
-                ({categories.find((c) => c._id === data?.resume_id?.category_id).name})
+                ({categories.find((c) => c._id === data?.resume_id?.category_id)?.name})
               </Text>
             </View>
             <a className="fdr aic mt-28" href={`tel:${data.waiter_id?.phone}`}>
