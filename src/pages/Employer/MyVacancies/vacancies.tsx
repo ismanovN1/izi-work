@@ -32,7 +32,7 @@ const Vacancies: React.FC<{ status: 'ACTIVE' | 'CLOSED' | 'ARCHIVED' }> = ({ sta
     } else {
       setVacancy_id(undefined);
     }
-  }, [setSearchParams]);
+  }, [location]);
 
   return (
     <View class_name="full-width full-height d-flex">

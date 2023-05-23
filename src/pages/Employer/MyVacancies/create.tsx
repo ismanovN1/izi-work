@@ -202,7 +202,7 @@ const MyVacaciesCreate = () => {
   }, [disabled, step, loadings[CREATE_VACANCY]]);
 
   return (
-    <div className={focus ? '' : 'd-none-on-mobile'}>
+    <div className={focus ? ' full-width full-height ' : 'd-none-on-mobile'}>
       <View class_name="full-width mv-20">
         <BackButton>Назад</BackButton>
       </View>

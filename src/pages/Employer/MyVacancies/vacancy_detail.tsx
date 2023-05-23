@@ -34,7 +34,7 @@ const VacancyDetail = () => {
     } else {
       setVacancy_id(undefined);
     }
-  }, [location]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (vacancy_id) {
