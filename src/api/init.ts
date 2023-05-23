@@ -1,3 +1,4 @@
+import { getErrorMessage } from 'helpers/common';
 import axios, { AxiosRequestConfig } from 'axios';
 
 export const BASE_URL =
@@ -35,7 +36,7 @@ instance.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       setTimeout(() => {
-        location.pathname = '/account/auth';
+        window.alert(`401 ${getErrorMessage(error.response)}`);
       }, 1000);
     }
     return Promise.reject(error);

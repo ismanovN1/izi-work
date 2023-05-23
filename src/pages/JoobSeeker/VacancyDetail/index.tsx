@@ -32,7 +32,7 @@ const VacancyDetail = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, isAuth } = useAppSelector((state) => state.auth);
   const { resume } = useAppSelector((state) => state.resume);
   const { current_respond } = useAppSelector((state) => state.actions);
   const { loadings, errors, successes, categories } = useAppSelector((state) => state.common);
@@ -57,8 +57,11 @@ const VacancyDetail = () => {
   }, [vacancyId]);
 
   useEffect(() => {
-    if (vacancy && resume) {
-      dispatch(get_respond_thunk({ vacancy_id: vacancy._id, resume_id: resume._id, waiter_id: resume.owner_id }));
+    if (vacancy && resume && isAuth) {
+      const id = setTimeout(() => {
+        dispatch(get_respond_thunk({ vacancy_id: vacancy._id, resume_id: resume._id, waiter_id: resume.owner_id }));
+      }, 500);
+      return () => clearTimeout(id);
     }
   }, [vacancy, resume]);
 
@@ -70,7 +73,7 @@ const VacancyDetail = () => {
   }, [successes]);
 
   const respond = (action = {}) => {
-    if (vacancy && resume) {
+    if (vacancy && resume && isAuth) {
       dispatch(
         respond_thunk({
           ...action,
@@ -170,7 +173,7 @@ const VacancyDetail = () => {
             </Text>
           </View>
           <Text SubtitleL class_name="mb-20">
-            {categories.find((item) => item._id === vacancy.category_id).name}
+            {categories.find((item) => item?._id === vacancy?.category_id)?.name}
           </Text>
           <RenderRow title="Описание работодателя:">{vacancy.descriptions}</RenderRow>
           <RenderRow title="Требования:">{vacancy.requirements}</RenderRow>
