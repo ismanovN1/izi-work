@@ -25,7 +25,6 @@ const App = () => {
         instance.defaults.headers.common.Authorization = token;
         dispatch(setIsAuth(true));
         dispatch(setUser(JSON.parse(user_data)));
-        dispatch(get_my_chats_thunk());
       }
       dispatch(get_categories_thunk());
       setLoaded(true);

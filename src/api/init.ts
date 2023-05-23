@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { getErrorMessage } from 'helpers/common';
 
 export const BASE_URL =
   process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : 'https://izi-work.jcloud.kz/';
@@ -28,14 +29,17 @@ export const makeQueryParams = (params: object = {}) => {
   }, '');
 };
 
+let tid: any;
+
 instance.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
     if (error.response.status === 401) {
-      setTimeout(() => {
-        location.pathname = '/account/auth';
+      clearTimeout(tid);
+      tid = setTimeout(() => {
+        window.alert(`401 ${getErrorMessage(error)}`);
       }, 1000);
     }
     return Promise.reject(error);
