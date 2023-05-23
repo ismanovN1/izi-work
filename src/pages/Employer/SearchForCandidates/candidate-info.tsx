@@ -11,10 +11,10 @@ import FavoriteGreyIcon from 'assets/icons/favorite-grey-large.svg';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { get_resume_by_id_thunk } from 'store/resume-store/resume-thunk';
 import { GET_RESUME_BY_ID } from 'store/resume-store/constans';
-import { removeSuccess } from 'store/common-store/common-slice';
 import { MoonLoader } from 'react-spinners';
 import { formatSalary, parseSalaryPeriod } from 'helpers/common';
 import { add_remove_my_favorite_resume_thunk } from 'store/action-store/action-thunk';
+import Button from 'components/custom-components/Button';
 
 type propsType = {
   candidate_id: string;
@@ -23,21 +23,14 @@ type propsType = {
 const CandidateInfo: React.FC<propsType> = ({ candidate_id }) => {
   const dispatch = useAppDispatch();
 
-  const { successes, errors, loadings, categories } = useAppSelector((s) => s.common);
+  const { errors, loadings, categories } = useAppSelector((s) => s.common);
   const { favorite_resumes } = useAppSelector((s) => s.resume);
 
   const [candidate, setCandidate] = useState<any>();
 
   useEffect(() => {
-    if (successes[GET_RESUME_BY_ID]) {
-      setCandidate(successes[GET_RESUME_BY_ID]);
-      dispatch(removeSuccess(GET_RESUME_BY_ID));
-    }
-  }, [successes[GET_RESUME_BY_ID]]);
-
-  useEffect(() => {
     if (candidate_id) {
-      dispatch(get_resume_by_id_thunk(candidate_id));
+      dispatch(get_resume_by_id_thunk(candidate_id, (res) => setCandidate(res)));
     }
   }, [candidate_id]);
 
@@ -60,7 +53,7 @@ const CandidateInfo: React.FC<propsType> = ({ candidate_id }) => {
   const is_favorite = favorite_resumes.includes(candidate_id);
 
   return (
-    <View card width={530} class_name="relative p-20 fdc ass">
+    <View card width={530} class_name="relative p-20 fdc ass CandidateInfo">
       <View
         class_name="absolute pointer"
         top={10}
@@ -71,7 +64,7 @@ const CandidateInfo: React.FC<propsType> = ({ candidate_id }) => {
       >
         {is_favorite ? <FavoriteIcon /> : <FavoriteGreyIcon />}
       </View>
-      <View class_name="d-flex">
+      <View class_name="d-flex main-info">
         <Image src={candidate.picture} width={140} height={140} class_name="br-8" />
         <View class_name="ml-20 pt-10 fdc">
           <Text BodyBlack>{candidate.name || '-'}</Text>
@@ -100,6 +93,23 @@ const CandidateInfo: React.FC<propsType> = ({ candidate_id }) => {
         <Text class_name="mt-15" Description>
           {candidate.experience}
         </Text>
+      </View>
+      <View class_name="d-flex space-b mt-15 buttons">
+        <Button type="outline" class_name="mt-12" width="47%">
+          Написать
+        </Button>
+        <Button
+          class_name="mt-12"
+          width="47%"
+          onClick={() => {
+            if (candidate?.owner_id?.phone) window.open(`tel:+${candidate.owner_id.phone}`);
+            else {
+              alert('Нет номера телефона');
+            }
+          }}
+        >
+          Позвонить
+        </Button>
       </View>
     </View>
   );

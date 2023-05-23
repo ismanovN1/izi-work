@@ -7,7 +7,7 @@ import Image from 'components/custom-components/Image';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
 
 // Helpers
-import { formatSalary, screen_height } from 'helpers/common';
+import { formatSalary, get_def_images, screen_height } from 'helpers/common';
 
 // Images & Icons
 import Pen from 'assets/icons/pen.svg';
@@ -20,7 +20,6 @@ import placemark from 'assets/icons/placemark.png';
 // Others
 import { VacancyI } from 'types/common';
 import Button from 'components/custom-components/Button';
-import { getCategoryImageById } from 'data/personals-data';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { get_my_vacancies_thunk, update_vacancy_thunk } from 'store/vacancies-store/vacancies-thunk';
 import { UPDATE_VACANCY } from 'store/vacancies-store/constans';
@@ -48,7 +47,7 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
     if (successes[UPDATE_VACANCY]) {
       dispatch(get_my_vacancies_thunk());
       dispatch(removeSuccess(UPDATE_VACANCY));
-      navigate('/employer/my-vacancies/active');
+      navigate('/my-vacancies/active');
     }
   }, [successes[UPDATE_VACANCY]]);
 
@@ -101,7 +100,7 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
       <View card minHeight={screen_height * 0.82} class_name="d-flex  p-20 preview-vacancy">
         <View width={510} class_name="mr-20 ">
           <Image
-            src={vacancy?.photo || getCategoryImageById(vacancy.category._id)}
+            src={vacancy?.photo || get_def_images(vacancy.category._id)}
             width={510}
             height={230}
             fit="cover"
@@ -123,7 +122,6 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
                 <YMaps>
                   <Map
                     defaultState={{ center: vacancy.address?.coords || [43.2220146, 76.8512485], zoom: 11 }}
-                    width={235}
                     height={155}
                   >
                     {vacancy?.address?.coords && (
@@ -152,7 +150,7 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
                 {vacancy.about.circumstances}
               </RenderRow>
               {vacancy._id ? (
-                <View class_name="d-flex pointer jce aic" onClick={() => setEditMode?.(true)}>
+                <View class_name="d-flex pointer jce aic mb-20" onClick={() => setEditMode?.(true)}>
                   <Pen />
                   <Text class_name="ml-8" Subtitle blue>
                     Редактировать
@@ -170,7 +168,13 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
             <RenderStatisticsRow icon={<EyeIcon />} name="Просмотры" count={vacancy.views} />
           </View>
           {vacancy.responses ? (
-            <Button leftIcon={<WhiteHandIcon />} class_name="mt-20">
+            <Button
+              leftIcon={<WhiteHandIcon />}
+              class_name="mt-20"
+              onClick={() => {
+                navigate(`/my-vacancies/responses?vacancy_id=${vacancy._id}`);
+              }}
+            >
               Просмотр отклика
             </Button>
           ) : null}

@@ -216,7 +216,7 @@ const MyVacaciesUpdate: React.FC<{ vacancy: any; onClose?: () => void }> = ({ va
 
   const RenderFooter: React.FC<any> = useCallback(() => {
     return (
-      <View class_name="space-b full-width mt-25">
+      <View class_name={`${step === 8 ? 'publication' : 'creation'}-footer space-b full-width mt-25`}>
         {step === 1 ? (
           <View />
         ) : (
@@ -227,15 +227,16 @@ const MyVacaciesUpdate: React.FC<{ vacancy: any; onClose?: () => void }> = ({ va
             </Text>
           </View>
         )}
-        <View class_name="d-flex aic">
+        <View class_name="d-flex aic f-wrap jce">
           {step === 8 ? (
-            <Button width={165} onClick={() => setPreview(true)} type="outline" bg="red" class_name="mr-20">
+            <Button width={165} onClick={() => setPreview(true)} type="outline" bg="red">
               Предпросмотр
             </Button>
           ) : null}
           <Button
             width={165}
             disabled={disabled}
+            class_name="ml-20"
             loading={loadings[UPDATE_VACANCY]}
             onClick={() => {
               if (step < 8) {
@@ -254,7 +255,7 @@ const MyVacaciesUpdate: React.FC<{ vacancy: any; onClose?: () => void }> = ({ va
 
   return (
     <View
-      class_name={`fixed zi-12 ovf-y-auto center p-40 pt-40 d-${createVacancy ? 'flex' : 'none'}`}
+      class_name={`vacancy-creation fixed zi-12 ovf-y-auto center p-40 pt-40 d-${createVacancy ? 'flex' : 'none'}`}
       top={0}
       bottom={0}
       right={0}
@@ -262,9 +263,9 @@ const MyVacaciesUpdate: React.FC<{ vacancy: any; onClose?: () => void }> = ({ va
       bg={'#001829B2'}
     >
       {preview ? (
-        <View class_name="d-flex">
+        <View class_name="d-flex" maxHeight={screen_height - 140}>
           <PreviewVacancy vacancy={fields} />
-          <View class_name="ml-20 pointer" width={40} onClick={() => setPreview(false)}>
+          <View class_name="ml-20 pointer preview-close-button" width={40} onClick={() => setPreview(false)}>
             <ModalCloseIcon />
           </View>
         </View>

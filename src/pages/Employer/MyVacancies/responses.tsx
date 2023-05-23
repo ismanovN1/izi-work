@@ -3,10 +3,9 @@ import React, { useEffect, useState, useMemo } from 'react';
 // Components
 import View from 'components/custom-components/View';
 import Text from 'components/custom-components/Text';
-import { NavLink, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { NavLink, Outlet, useMatch, useNavigate, useSearchParams } from 'react-router-dom';
 import VacancyItem from 'components/my-vacancies-components/vacancy-item';
 import CandidateItem from 'components/my-vacancies-components/candidate-item';
-import { getCategoryImageById } from 'data/personals-data';
 import CandidateCard from 'components/my-vacancies-components/candidate-card';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { formatSalary } from 'helpers/common';
@@ -14,6 +13,7 @@ import { get_responds_by_vacancy_id_thunk } from 'store/action-store/action-thun
 import { GET_RESPONDS_BY_VACANCY_ID } from 'store/action-store/constants';
 import { removeSuccess } from 'store/common-store/common-slice';
 import { MoonLoader } from 'react-spinners';
+import BackButton from 'components/ui/BackButton';
 
 // helpers
 
@@ -28,6 +28,10 @@ const Responses = () => {
   const [vacancy_id, setVacancy_id] = useState<string | null>(null);
   const [candidate_id, setCandidate_id] = useState<string | null>(null);
   const [waiters, setWaiters] = useState<any>([]);
+
+  const focus = useMatch('/my-vacancies/responses');
+
+  console.log(focus);
 
   useEffect(() => {
     const vId = searchParams.get('vacancy_id');
@@ -46,7 +50,7 @@ const Responses = () => {
       setWaiters(successes[GET_RESPONDS_BY_VACANCY_ID]);
       dispatch(removeSuccess(GET_RESPONDS_BY_VACANCY_ID));
     }
-  }, [successes[GET_RESPONDS_BY_VACANCY_ID]]);
+  }, [successes]);
 
   useEffect(() => {
     if (vacancy_id) {
@@ -56,16 +60,19 @@ const Responses = () => {
 
   const current_respond = useMemo(
     () => (candidate_id ? waiters?.find((item) => item._id === candidate_id) : null),
-    [candidate_id],
+    [candidate_id, waiters],
   );
+
+  console.log(waiters, 'candidate_id');
 
   return (
     <View class_name="full-width full-height d-flex responds">
-      <View width={275} class_name="select-vacancy  fdc ais ml-10">
-        <View class_name="h-50 pt-22 ph-20">
+      <View width={275} class_name={`select-vacancy  fdc ais ml-10 ${vacancy_id ? 'd-none-on-mobile' : ''}`}>
+        <View class_name="d-flex aic h-50 pt-22 ph-20">
+          <BackButton />
           <Text SubtitleB>Выберите вакансию</Text>
         </View>
-        <View class_name="fdc ovf-y-auto ph-10 pt-10">
+        <View class_name="fdc ovf-y-auto ph-10 pt-10 vacancy-list-container">
           {my_vacancies.length ? (
             my_vacancies.map((item) => (
               <VacancyItem
@@ -96,9 +103,10 @@ const Responses = () => {
         </View>
       </View>
       {!vacancy_id ? null : (
-        <View width={275} class_name="fdc ais ml-10">
-          <View class_name="h-50 pt-22 ph-20">
-            <Text SubtitleB>Выберите вакансию</Text>
+        <View width={275} class_name={`fdc ais ml-10 select-waiter ${candidate_id ? 'd-none-on-mobile' : ''}`}>
+          <View class_name="d-flex aic h-50 pt-22 ph-20 ">
+            <BackButton />
+            <Text SubtitleB>Выберите кандидата</Text>
           </View>
           <View class_name="fdc ovf-y-auto ph-10 pt-10">
             {waiters.map((item) => (

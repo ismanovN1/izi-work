@@ -421,3 +421,37 @@ a {
 .VacancyPhoto {
   border-radius: 0px 0px 8px 8px;
 }
+
+.navbar-stand {
+  height: 70px;
+}
+
+.ph-20responsive {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .go-back-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .ph-20responsive {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .d-none-on-mobile {
+    display: none;
+  }
+
+  .d-flex-on-mobile {
+    display: flex;
+  }
+
+  .navbar-stand {
+    height: 65px;
+  }
+}

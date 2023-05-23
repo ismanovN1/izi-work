@@ -3,7 +3,7 @@ import { API_URL } from 'api/init';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import React, { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
-import { addMessage } from 'store/chat-store/chat-slice';
+import { addMessage, incCountUnreadMessages, mark_as_read } from 'store/chat-store/chat-slice';
 const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8001' : 'https://izi-work-prod.onrender.com';
 
 const SocketWrapper = ({ children }) => {
@@ -31,17 +31,29 @@ const SocketWrapper = ({ children }) => {
   const onMessageCreated = (message) => {
     if (current_chat && current_chat._id === message.chat_id) {
       dispatch(addMessage(message));
+
       socket.current?.emit('message:confirm', {
         chat_id: message.chat_id,
+        to_whom: message.user_id,
         is_employer: !!user?.is_employer,
       });
+    } else {
+      dispatch(incCountUnreadMessages(message.chat_id));
+    }
+  };
+
+  const onMessageReaded = (id) => {
+    if (current_chat && current_chat._id === id) {
+      dispatch(mark_as_read());
     }
   };
 
   useEffect(() => {
     socket.current?.on('message:created', onMessageCreated);
+    socket.current?.on('message:readed', onMessageReaded);
     return () => {
       socket.current?.off('message:created', onMessageCreated);
+      socket.current?.off('message:readed', onMessageReaded);
     };
   }, [current_chat]);
 

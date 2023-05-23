@@ -123,25 +123,26 @@ export const get_vacancies_nearby_thunk = (params: any) => async (dispatch: AppD
   }
 };
 
-export const get_my_vacancy_by_id_thunk = (id: string) => async (dispatch: AppDispatch) => {
-  dispatch(startLoadings(GET_MY_VACANCY_BY_ID));
+export const get_my_vacancy_by_id_thunk =
+  (id: string, setVacancy: (val: any) => void) => async (dispatch: AppDispatch) => {
+    dispatch(startLoadings(GET_MY_VACANCY_BY_ID));
 
-  try {
-    if (!id) throw new Error('Id is required');
+    try {
+      if (!id) throw new Error('Id is required');
 
-    const res = await api.employer.vacancy.get_my_vacancy(id);
+      const res = await api.employer.vacancy.get_my_vacancy(id);
 
-    if (res.status === 200) {
-      dispatch(setSuccess({ [GET_MY_VACANCY_BY_ID]: res.data }));
+      if (res.status === 200) {
+        setVacancy?.(res.data);
+      }
+    } catch (error) {
+      dispatch(setError({ [GET_MY_VACANCY_BY_ID]: getErrorMessage(error) }));
+    } finally {
+      dispatch(stopLoadings(GET_MY_VACANCY_BY_ID));
     }
-  } catch (error) {
-    dispatch(setError({ [GET_MY_VACANCY_BY_ID]: getErrorMessage(error) }));
-  } finally {
-    dispatch(stopLoadings(GET_MY_VACANCY_BY_ID));
-  }
-};
+  };
 
-export const get_vacancy_by_id_thunk = (id: string) => async (dispatch: AppDispatch) => {
+export const get_vacancy_by_id_thunk = (id: string, onSuccess) => async (dispatch: AppDispatch) => {
   dispatch(startLoadings(GET_VACANCY_BY_ID));
   dispatch(removeError(GET_VACANCY_BY_ID));
 
@@ -149,7 +150,7 @@ export const get_vacancy_by_id_thunk = (id: string) => async (dispatch: AppDispa
     const res = await api.employer.vacancy.get_vacancy_by_id(id);
 
     if (res.status === 200) {
-      dispatch(setSuccess({ [GET_VACANCY_BY_ID]: res.data }));
+      onSuccess?.(res.data);
     }
   } catch (error) {
     dispatch(setError({ [GET_VACANCY_BY_ID]: getErrorMessage(error) }));

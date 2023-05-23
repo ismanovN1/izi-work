@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 type VacancyLookUpI = {
   category_name: string;
+  category_id?: string;
   created_at?: string;
   favorite: number;
   picture: string;

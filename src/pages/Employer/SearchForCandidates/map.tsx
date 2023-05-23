@@ -8,9 +8,13 @@ import placemarkI from 'assets/icons/placemark.png';
 import placemarkC from 'assets/icons/placemark-c.png';
 
 const MapForCandidates = ({ currentPosition, myPosition, setSearchParams }: any, mapRef) => {
-  const { resumes, filter_params } = useAppSelector((s) => s.resume);
+  const { resumes } = useAppSelector((s) => s.resume);
   return (
-    <View class_name="br-8 f-shrink-1 ovf-hidden bg-light-grey" height={screen_height - 180} width={808}>
+    <View
+      class_name="br-8 f-shrink-1 ovf-hidden bg-light-grey map-inner-container"
+      height="calc(100vh - 180px)"
+      width={808}
+    >
       <YMaps>
         <Map
           instanceRef={(ref) => (mapRef.current = ref)}

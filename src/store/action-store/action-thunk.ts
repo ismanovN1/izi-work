@@ -29,6 +29,7 @@ export const get_responds_by_vacancy_id_thunk = (params: any) => async (dispatch
   dispatch(startLoadings(GET_RESPONDS_BY_VACANCY_ID));
   try {
     const res = await api.waiter.action.get_responds_by_vacancy_id(params);
+    console.log('res.data', res.data);
     if (res.status === 200) {
       dispatch(setSuccess({ [GET_RESPONDS_BY_VACANCY_ID]: res.data }));
     }

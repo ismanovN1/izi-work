@@ -4,8 +4,8 @@ import React, { useMemo } from 'react';
 import { VacancyI } from 'types/common';
 import PenIcon from 'assets/icons/pen-dark-grey.svg';
 import Image from 'components/custom-components/Image';
-import { getCategoryImageById } from 'data/personals-data';
 import { useAppSelector } from 'hooks';
+import { get_def_images } from 'helpers/common';
 
 type propsType = {
   fields?: Partial<VacancyI>;
@@ -37,7 +37,7 @@ const Finally: React.FC<propsType> = ({ goBack, fields }) => {
         <RenderRow step={7}>
           <Text SubtitleM>Фото</Text>
           <Image
-            src={fields.photo || getCategoryImageById(fields.category._id)}
+            src={fields.photo || get_def_images(fields.category._id)}
             width="100%"
             height={220}
             fit="cover"

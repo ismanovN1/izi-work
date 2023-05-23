@@ -2,14 +2,41 @@
   .my-vacancies {
     padding-left: 16px;
     padding-right: 16px;
+
     .vacancies-navaigation {
       width: 100% !important;
-      display: none;
+    }
+
+    .vacancy-list-container {
+      width: 100%;
+    }
+
+    .select-vacancy,
+    .select-waiter {
+      width: 100% !important;
+
+      .SubtitleB {
+        margin-left: 10px;
+      }
+
+      .ph-20 {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+
+      .h-50 {
+        height: 70px;
+      }
+
+      .mini-card {
+        width: 100% !important;
+      }
+    }
+    .detail-info-container {
+      margin-top: 10px;
     }
   }
-}
 
-@media (max-width: 758px) {
   .vacancy-creation {
     padding: 20px 16px !important;
 

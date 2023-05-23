@@ -8,4 +8,88 @@
   right: 0;
   background-color: #001829b2;
   z-index: 5;
+
+  .cover {
+    display: none;
+  }
+
+  .show_filter_params_button {
+    display: none;
+  }
+}
+
+@media (max-width: 758px) {
+  .filter-modal {
+    position: fixed;
+    padding: 0 12px;
+    padding-top: 65px;
+
+    .filter-header {
+      position: absolute;
+      top: 65px;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      margin: 0;
+      z-index: 10;
+
+      span {
+        text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.7);
+      }
+      svg {
+        -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+        filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+        /* Similar syntax to box-shadow */
+      }
+    }
+
+    .filter-body {
+      margin-top: 80px;
+      width: 100% !important;
+      height: calc(100vh - 180px) !important;
+
+      .filter-parametrs {
+        width: 100% !important;
+        padding: 10px;
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        z-index: 5;
+      }
+
+      .d-none-card {
+        display: none;
+      }
+      .map-container {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        bottom: 0px;
+        left: 0;
+        height: auto;
+        margin: 0;
+        border-radius: 0;
+        z-index: 0;
+      }
+      .cover {
+        display: block;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        bottom: 0px;
+        left: 0;
+        background: #001829b2;
+        z-index: 1;
+      }
+      .show_filter_params_button {
+        display: block;
+        padding: 0 16px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 30px;
+        z-index: 5;
+      }
+    }
+  }
 }

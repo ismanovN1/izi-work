@@ -23,6 +23,7 @@ import { isMobile } from 'react-device-detect';
 interface FieldsI {
   name?: string;
   email?: string;
+  phone?: string;
   is_employer?: boolean;
   password?: string;
   repass?: string;
@@ -36,14 +37,6 @@ const Registration = () => {
 
   const [fields, setFields] = useState<FieldsI>({});
 
-  useEffect(() => {
-    if (successes[REGISTRATION]) {
-      dispatch(setIsAuth(true));
-      navigate('/account/create-edit');
-      dispatch(removeSuccess(REGISTRATION));
-    }
-  }, [successes[REGISTRATION]]);
-
   const onChangeField = (field: Partial<FieldsI>) => {
     setFields((prev) => ({ ...prev, ...field }));
   };
@@ -51,7 +44,12 @@ const Registration = () => {
   const onSubmit = () => {
     dispatch(removeError(REGISTRATION));
     const { repass, ...restFields } = fields;
-    dispatch(registration_thunk({ is_employer: true, ...restFields }));
+    dispatch(
+      registration_thunk({ is_employer: true, ...restFields }, () => {
+        dispatch(setIsAuth(true));
+        navigate('/account/create-edit');
+      }),
+    );
   };
   return (
     <View class_name={`full-width fdc aic p-${isMobile ? 16 : 40}`}>
@@ -79,6 +77,15 @@ const Registration = () => {
           onChange={(e) => onChangeField({ email: e.target.value || undefined })}
         />
         <Input
+          mask={['+', '7', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/]}
+          guide
+          class_name="mt-20"
+          placeholder="+7 (***) *** ** **"
+          type="numeric"
+          value={fields.phone?.slice(1)}
+          onChange={(e) => onChangeField({ phone: e.target.value.replace(/\D+/g, '') || undefined })}
+        />
+        <Input
           class_name="mv-20"
           placeholder="Пароль"
           type="password"
@@ -96,9 +103,12 @@ const Registration = () => {
             {errors[REGISTRATION]}
           </Text>
         )}
+        <Text class_name="pv-15" grey Description>
+          *указывая номер телефона, потенциальные соискатели смогут вам звонить
+        </Text>
         <Button
           class_name="mt-20"
-          disabled={Object.keys(checkObjValue(fields)).length !== 4 || fields.password !== fields.repass}
+          disabled={Object.keys(checkObjValue(fields)).length < 4 || fields.password !== fields.repass}
           loading={loadings[REGISTRATION]}
           onClick={onSubmit}
         >

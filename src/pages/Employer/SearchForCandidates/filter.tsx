@@ -12,7 +12,7 @@ import { setFilterParams } from 'store/resume-store/resume-slice';
 
 let tId: any;
 
-const Filter: React.FC<any> = ({ go_to, mode, show_nearby }) => {
+const Filter: React.FC<any> = ({ go_to, mode, show_nearby, candidate_id, setMode }) => {
   const dispatch = useAppDispatch();
 
   const { categories } = useAppSelector((s) => s.common);
@@ -35,7 +35,7 @@ const Filter: React.FC<any> = ({ go_to, mode, show_nearby }) => {
   }, []);
 
   return (
-    <View class_name="p-20 mt-60" card width={275}>
+    <View class_name={`p-20 mt-60 fdc ${candidate_id || mode !== 'FILTER' ? 'd-none-on-mobile' : ''}`} card width={275}>
       <Text SubtitleB>Поиск сотрудника</Text>
       <Text DescriptionM class_name="mt-25 mb-9">
         Выберите категорию
@@ -91,8 +91,18 @@ const Filter: React.FC<any> = ({ go_to, mode, show_nearby }) => {
         }}
         options={cities.map((item) => ({ _id: item.id, name: item.name }))}
       />
-      <Button leftIcon={<LocationIcon />} class_name="mt-30" onClick={() => show_nearby(onChangeField)}>
+      <Button
+        leftIcon={<LocationIcon />}
+        class_name="mt-30 d-none-on-mobile"
+        onClick={() => show_nearby(onChangeField)}
+      >
         {mode === 'LIST' ? 'Показать рядом' : 'Сотрудник рядом'}
+      </Button>
+      <Button type="outline" class_name="mt-30 d-none d-flex-on-mobile" onClick={() => setMode('LIST')}>
+        Показать список
+      </Button>
+      <Button leftIcon={<LocationIcon />} class_name="mt-10 d-none d-flex-on-mobile" onClick={() => setMode('MAP')}>
+        Показать на карте
       </Button>
     </View>
   );

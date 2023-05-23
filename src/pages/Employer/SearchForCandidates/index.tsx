@@ -5,6 +5,7 @@ import View from 'components/custom-components/View';
 import Text from 'components/custom-components/Text';
 
 // helpers
+import './index.scss';
 
 import CandidateItem from 'components/my-vacancies-components/candidate-item';
 import { useSearchParams } from 'react-router-dom';
@@ -14,6 +15,11 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { get_resumes_thunk } from 'store/resume-store/resume-thunk';
 import Filter from './filter';
 import MapForCandidates from './map';
+import BackButton from 'components/ui/BackButton';
+import Button from 'components/custom-components/Button';
+
+import { filter_icon_png } from 'assets/icons/personals-icons';
+import Image from 'components/custom-components/Image';
 
 const SearchCandidates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +29,7 @@ const SearchCandidates = () => {
   const { resumes, filter_params } = useAppSelector((s) => s.resume);
 
   const [candidate_id, setCandidate_id] = useState<string | null>(null);
-  const [mode, setMode] = useState<'MAP' | 'LIST'>('LIST');
+  const [mode, setMode] = useState<'MAP' | 'LIST' | 'FILTER'>('LIST');
 
   const [myPosition, setMyPosition] = useState<any>();
   const [currentPosition, setCurrentPosition] = useState<any>();
@@ -52,13 +58,15 @@ const SearchCandidates = () => {
   }, []);
 
   return (
-    <View class_name="full-width d-flex ais ">
+    <View class_name="full-width d-flex ais search-waiters">
       <View width={125} class_name="f-shrink-1" />
       <Filter
+        candidate_id={candidate_id}
         go_to={(coords, zoom) => {
           mapRef.current?.setCenter(coords, zoom);
         }}
         mode={mode}
+        setMode={setMode}
         show_nearby={(onChangeField) => {
           setMode('MAP');
           setSearchParams('');
@@ -72,9 +80,19 @@ const SearchCandidates = () => {
           }
         }}
       />
-      <View width={275} class_name={`fdc ais ml-10 ${mode !== 'LIST' ? 'd-none' : ''}`}>
-        <View class_name="h-50 pt-22 ph-20">
-          <Text SubtitleB></Text>
+      <View
+        width={275}
+        class_name={`fdc ais ml-10 ${mode !== 'LIST' ? 'd-none' : ''} ${candidate_id ? 'd-none-on-mobile' : ''}`}
+      >
+        <View class_name="h-50 pt-22 ph-20 list-header">
+          <Button
+            type="outline"
+            class_name="d-none d-flex-on-mobile"
+            leftIcon={<Image width={20.7} src={filter_icon_png} />}
+            onClick={() => setMode('FILTER')}
+          >
+            Фильтр
+          </Button>
         </View>
         <View
           class_name="fdc ovf-y-auto ovf-x-hidden scroll_bar_usual pr-20 ph-10 pt-10"
@@ -96,7 +114,19 @@ const SearchCandidates = () => {
           ))}
         </View>
       </View>
-      <View class_name={`fdc  pl-20 pr-10 f-shrink-1 ${mode === 'LIST' ? 'd-none' : ''}`}>
+      <View
+        class_name={`fdc  pl-20 pr-10 map-container ${mode !== 'MAP' ? 'd-none' : ''} ${
+          candidate_id ? 'd-none-on-mobile' : ''
+        }`}
+      >
+        <Button
+          type="outline"
+          class_name="d-none d-flex-on-mobile mv-10"
+          leftIcon={<Image width={20.7} src={filter_icon_png} />}
+          onClick={() => setMode('FILTER')}
+        >
+          Фильтр
+        </Button>
         <View class_name="h-60 d-flex aic">
           <Text SubtitleB>Найди сотрудника рядом с офисом</Text>
         </View>
@@ -108,8 +138,11 @@ const SearchCandidates = () => {
         />
       </View>
       {candidate_id ? (
-        <View class_name="mt-60 ph-10 ass d-flex">
-          <CandidateInfo candidate_id={candidate_id} />
+        <View class_name="waiter-info">
+          <BackButton class_name="mv-20">Назад</BackButton>
+          <View class_name="mt-60 ph-10 ass d-flex">
+            <CandidateInfo candidate_id={candidate_id} />
+          </View>
         </View>
       ) : null}
       <View width={125} class_name="f-shrink-1" />

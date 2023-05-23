@@ -61,8 +61,14 @@ const MyVacancies = () => {
   };
   return (
     <View class_name="full-width d-flex aifs my-vacancies">
-      <View width={125} class_name="f-shrink-1" />
-      <View card width={275} height={screen_height - 180} class_name="vacancies-navaigation f-shrink-0 p-10 mt-60">
+      <View width={125} class_name="f-shrink-1 d-none-on-mobile" />
+      <View
+        card
+        width={275}
+        height={screen_height - 180}
+        class_name={`vacancies-navaigation f-shrink-0 p-10 mt-60 ${main ? '' : 'd-none-on-mobile'}`}
+      >
+        <RenderTab link="create">Разместить работу</RenderTab>
         <RenderTab link="responses">Отклики на вакансии</RenderTab>
         <RenderTab link="active?type=3" count={my_active_vacancies.length}>
           Активные вакансии
@@ -77,7 +83,7 @@ const MyVacancies = () => {
       <View height={screen_height - 120} width="100%">
         <Outlet />
       </View>
-      <View width={125} class_name="f-shrink-1" />
+      <View width={125} class_name="f-shrink-1 d-none-on-mobile" />
     </View>
   );
 };

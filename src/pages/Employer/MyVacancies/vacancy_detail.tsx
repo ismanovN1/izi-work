@@ -11,11 +11,12 @@ import { GET_MY_VACANCY_BY_ID } from 'store/vacancies-store/constans';
 import { removeSuccess } from 'store/common-store/common-slice';
 import { GridLoader } from 'react-spinners';
 import MyVacaciesUpdate from './update';
+import BackButton from 'components/ui/BackButton';
 
 // helpers
 
 const VacancyDetail = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 
   // Selectors
@@ -33,20 +34,13 @@ const VacancyDetail = () => {
     } else {
       setVacancy_id(undefined);
     }
-  }, [setSearchParams]);
+  }, [location]);
 
   useEffect(() => {
     if (vacancy_id) {
-      dispatch(get_my_vacancy_by_id_thunk(vacancy_id));
+      dispatch(get_my_vacancy_by_id_thunk(vacancy_id, setVacancy));
     }
   }, [vacancy_id]);
-
-  useEffect(() => {
-    if (successes[GET_MY_VACANCY_BY_ID]) {
-      setVacancy(successes[GET_MY_VACANCY_BY_ID]);
-      dispatch(removeSuccess(GET_MY_VACANCY_BY_ID));
-    }
-  }, [successes[GET_MY_VACANCY_BY_ID]]);
 
   if (!vacancy_id) return null;
 
@@ -64,42 +58,41 @@ const VacancyDetail = () => {
       </View>
     );
 
-  return (
-    vacancy && (
-      <View class_name="mt-60">
-        <PreviewVacancy
-          setEditMode={setEditMode}
-          vacancy={{
-            _id: vacancy._id,
-            photo: vacancy.picture,
-            status: vacancy.status,
-            salary: {
-              from: vacancy.salary_from,
-              to: vacancy.salary_to,
-              period: vacancy.salary_period,
-            },
-            category: { _id: vacancy.category_id, childId: vacancy.sub_category_id, name: vacancy.category_name },
-            about: {
-              descriptions: vacancy.descriptions,
-              requirements: vacancy.requirements,
-              circumstances: vacancy.circumstances,
-            },
-            schedule: { shedule: vacancy.shedule },
-            address: { name: vacancy.address, coords: [vacancy.lat, vacancy.lon] },
-            favorite: vacancy.favorite,
-            responses: vacancy.responses,
-            views: vacancy.views,
-          }}
-        />
-        <MyVacaciesUpdate
-          vacancy={editMode ? vacancy : null}
-          onClose={() => {
-            setEditMode(false);
-          }}
-        />
-      </View>
-    )
-  );
+  return vacancy ? (
+    <View class_name="mt-60 detail-info-container">
+      <BackButton class_name="mv-10">Назад</BackButton>
+      <PreviewVacancy
+        setEditMode={setEditMode}
+        vacancy={{
+          _id: vacancy._id,
+          photo: vacancy.picture,
+          status: vacancy.status,
+          salary: {
+            from: vacancy.salary_from,
+            to: vacancy.salary_to,
+            period: vacancy.salary_period,
+          },
+          category: { _id: vacancy.category_id, childId: vacancy.sub_category_id, name: vacancy.category_name },
+          about: {
+            descriptions: vacancy.descriptions,
+            requirements: vacancy.requirements,
+            circumstances: vacancy.circumstances,
+          },
+          schedule: { shedule: vacancy.shedule },
+          address: { name: vacancy.address, coords: [vacancy.lat, vacancy.lon] },
+          favorite: vacancy.favorite,
+          responses: vacancy.responses,
+          views: vacancy.views,
+        }}
+      />
+      <MyVacaciesUpdate
+        vacancy={editMode ? vacancy : null}
+        onClose={() => {
+          setEditMode(false);
+        }}
+      />
+    </View>
+  ) : null;
 };
 
-export default React.memo(VacancyDetail);
+export default VacancyDetail;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Components
 import View from 'components/custom-components/View';
@@ -15,9 +15,31 @@ import chat_image from 'assets/images/chat.png';
 import { useNavigate } from 'react-router-dom';
 
 import './index.scss';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { setIsAuth, setUser } from 'store/auth-store/auth-slice';
+import { setResume } from 'store/resume-store/resume-slice';
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((s) => s.auth);
+
+  useEffect(() => {
+    if (user && !user.is_employer) {
+      const conf = window.confirm('Вы не можете продолжать как соискатель хотите выйти из своей учетной записи?');
+      if (conf) {
+        dispatch(setUser(undefined));
+        dispatch(setResume(undefined));
+        dispatch(setIsAuth(false));
+        localStorage.removeItem('@token');
+        localStorage.removeItem('@user_data');
+        navigate('/');
+      } else {
+        window.open('https://izi-work.kz');
+      }
+    }
+  }, []);
+
   return (
     <View class_name="full-width relative fdc aic ovf-x-hidden home-landing">
       <View width="100%">

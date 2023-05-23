@@ -9,7 +9,6 @@ import Button from 'components/custom-components/Button';
 // Helpers & Utils
 import { checkObjValue, screen_height } from 'helpers/common';
 import PersonalCard from 'components/personals-components/PersonalCard';
-import { personals } from 'data/personals-data';
 import { useNavigate } from 'react-router-dom';
 import Filter from 'components/personals-components/Filter';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -43,7 +42,7 @@ const Personals = () => {
                 key={item._id}
                 index={index}
                 person={item}
-                onClick={() => navigate(`/employer/personals/${item._id}`)}
+                onClick={() => navigate(`/personals/${item._id}`)}
               />
             ))}
           </View>

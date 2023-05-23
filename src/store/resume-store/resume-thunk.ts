@@ -109,14 +109,14 @@ export const get_resumes_thunk = (params: any) => async (dispatch: AppDispatch) 
   }
 };
 
-export const get_resume_by_id_thunk = (id: string) => async (dispatch: AppDispatch) => {
+export const get_resume_by_id_thunk = (id: string, onSuccess) => async (dispatch: AppDispatch) => {
   dispatch(startLoadings(GET_RESUME_BY_ID));
   dispatch(removeError(GET_RESUME_BY_ID));
 
   try {
     const res = await api.employer.resume.get_resume_by_id(id);
     if (res.status === 200) {
-      dispatch(setSuccess({ [GET_RESUME_BY_ID]: res.data }));
+      onSuccess?.(res.data);
     }
   } catch (error) {
     dispatch(setError({ [GET_RESUME_BY_ID]: getErrorMessage(error) }));

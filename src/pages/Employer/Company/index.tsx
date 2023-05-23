@@ -15,6 +15,7 @@ import { GET_MY_COMPANY } from 'store/company-store/constans';
 import { FadeLoader } from 'react-spinners';
 import { get_my_company_thunk } from 'store/company-store/company-thunk';
 import { removeError } from 'store/common-store/common-slice';
+import './index.scss';
 
 const Company = () => {
   const navigate = useNavigate();
@@ -30,9 +31,9 @@ const Company = () => {
   }, []);
 
   return (
-    <View class_name="full-width d-flex aifs ph-125 pt-60">
+    <View class_name="full-width d-flex aifs ph-125 pt-60 my-company">
       {company_data && (
-        <View card width={275} height={screen_height - 180} class_name="p-20 mr-20">
+        <View card width={275} height={screen_height - 180} class_name="p-20 mr-20 d-none-on-mobile">
           <View class_name="fdr">
             <Image src={company_data?.logo} class_name="br-8 bc-grey mr-10" width={52} height={52} fit="cover" />
             <Text class_name="mt4" Description>
@@ -41,7 +42,7 @@ const Company = () => {
           </View>
         </View>
       )}
-      <View card class_name="br-10 p-20 d-flex ais" width={825}>
+      <View card class_name="br-10 p-20 d-flex ais base-info" width={825}>
         {loadings[GET_MY_COMPANY] ? (
           <View class_name="full-width center" height={200}>
             <FadeLoader color="#36d7b7" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 // Components
 import View from 'components/custom-components/View';
@@ -36,6 +36,21 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuth } = useAppSelector((state) => state.auth);
+  const { unread_messages } = useAppSelector((state) => state.chat);
+  const vacancies = useAppSelector((s) => s.vacancies);
+
+  const unread_count = useMemo(
+    () => Object.values(unread_messages).reduce((a: number, b) => a + b, 0),
+    [unread_messages],
+  );
+
+  const vac_count = useMemo(
+    () =>
+      vacancies?.my_active_vacancies.length +
+      vacancies?.my_closed_vacancies.length +
+      vacancies?.my_archived_vacancies.length,
+    [vacancies],
+  );
 
   useEffect(() => {
     close_menu();
@@ -54,32 +69,39 @@ const NavBar = () => {
         <View class_name="menu-container">
           {isAuth ? (
             <>
-              <NavLink to="/employer/serach-candidates" className="mr-20 ph-10 br-8 bg-blue pointer center h-34">
+              <NavLink to="/serach-candidates" className="mr-20 ph-10 br-8 bg-blue pointer center h-34">
                 <LoupeIcon />
                 <Text DescriptionB white class_name="ml-7">
                   Поиск кандидатов
                 </Text>
               </NavLink>
               <NavLink
-                to="/employer/my-vacancies"
+                to="/my-vacancies"
                 className={({ isActive }) => `mh-30 pointer d-flex aic color-${isActive ? 'blue' : 'black'}`}
               >
                 <JobIcon />
                 <Text DescriptionB class_name="ml-7 mt-5">
-                  Мои вакансии
+                  {vac_count ? 'Мои вакансии' : 'Разместить вакансию'}
                 </Text>
               </NavLink>
               <NavLink
-                to="/employer/chat"
+                to="/chat"
                 className={({ isActive }) => `mh-30 pointer d-flex aic color-${isActive ? 'blue' : 'black'}`}
               >
                 <ChatIcon />
                 <Text DescriptionB class_name="ml-7 mt-5">
                   Чат
                 </Text>
+                {unread_count ? (
+                  <View class_name="ml-12 mt-4 w-14 h-14 br-7 center bg-red">
+                    <Text ExtraSmallM white>
+                      {unread_count}
+                    </Text>
+                  </View>
+                ) : null}
               </NavLink>
               <NavLink
-                to="/employer/my-company"
+                to="/my-company"
                 className={({ isActive }) => `mh-30 pointer d-flex aic color-${isActive ? 'blue' : 'black'}`}
               >
                 <CheckMarkIcon />
@@ -136,8 +158,13 @@ const NavBar = () => {
               </NavLink>
             </>
           )}
-          <View class_name="close-button" onClick={close_menu}>
-            <Remove />
+          <View class_name="close-button">
+            <Text BodyB blue>
+              Меню
+            </Text>
+            <View onClick={close_menu}>
+              <Remove />
+            </View>
           </View>
         </View>
         <View

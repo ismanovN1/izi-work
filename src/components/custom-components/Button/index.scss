@@ -1,5 +1,6 @@
 @mixin button {
   width: 100%;
+  flex-shrink: 0 !important;
   height: #{52}px;
   border-radius: 8px;
   padding: 0 10px;

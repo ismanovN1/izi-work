@@ -25,3 +25,9 @@ export const get_my_chats = () =>
   get({
     url: getUrl('get-my-chats'),
   });
+
+export const user_is_online = (user_id) =>
+  get({
+    url: getUrl('user-is-online'),
+    params: { user_id },
+  });

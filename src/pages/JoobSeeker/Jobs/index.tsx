@@ -1,11 +1,10 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import View from 'components/custom-components/View';
-import { formatCreatedAt, formatSalary } from 'helpers/common';
+import { formatCreatedAt, formatSalary, get_def_images } from 'helpers/common';
 import Text from 'components/custom-components/Text';
 import Button from 'components/custom-components/Button';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import VacancyCard from 'components/ui/VacancyCard';
-import { getCategoryImageById } from 'data/personals-data';
 import ModalCard from 'components/ui/ModalCard';
 import { JobFilter } from './filter';
 import FavoriteIcon from 'assets/icons/favorite-icon-white.svg';
@@ -109,7 +108,7 @@ const Job = () => {
               description={vacancy.descriptions}
               salary={formatSalary(vacancy.salary_from, vacancy.salary_to)}
               created={formatCreatedAt(vacancy.created_at)}
-              src={vacancy.picture || getCategoryImageById(vacancy._id)}
+              src={vacancy.picture || get_def_images(vacancy.vacancy_id)}
               onClick={() => {
                 navigate(vacancy._id);
               }}

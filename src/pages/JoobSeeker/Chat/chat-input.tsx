@@ -23,12 +23,6 @@ export const ChatInput: React.FC<any> = () => {
   const { loadings, successes } = useAppSelector((s) => s.common);
   const [value, setValue] = useState('');
 
-  useEffect(() => {
-    if (successes[CREATE_MESSAGE]) {
-      setValue('');
-      dispatch(removeSuccess(CREATE_MESSAGE));
-    }
-  }, [successes[CREATE_MESSAGE]]);
   return (
     <View class_name="chat-footer ph-20u">
       <Input
@@ -43,11 +37,14 @@ export const ChatInput: React.FC<any> = () => {
         onClick={() => {
           if (value.trim()) {
             dispatch(
-              create_message_thunk({
-                chat_id: current_chat?._id,
-                message: value.trim(),
-                to_whom: current_chat?.employer_id,
-              }),
+              create_message_thunk(
+                {
+                  chat_id: current_chat?._id,
+                  message: value.trim(),
+                  to_whom: current_chat?.employer_id,
+                },
+                () => setValue(''),
+              ),
             );
           }
         }}

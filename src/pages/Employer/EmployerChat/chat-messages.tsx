@@ -31,10 +31,11 @@ export const ChatMessages: React.FC<any> = () => {
   );
 
   const FirstMessage = useCallback(() => {
+    const message = messages[messages.length - 1];
     return (
       <MeMessage
         for_employer
-        updated={moment(messages[messages.length - 1]?.created_at).format('HH:mm')}
+        updated={moment(message?.created_at).format('HH:mm')}
         custom_element={
           <View maxWidth={312}>
             <View class_name="f-shrink-0 d-flex">
@@ -47,11 +48,11 @@ export const ChatMessages: React.FC<any> = () => {
               </View>
             </View>
             <Text Description class_name="mt-20">
-              {messages[messages.length - 1]?.message}
+              {message?.message}
             </Text>
           </View>
         }
-        status={messages[messages.length - 1]?.unread ? 'unread' : 'readed'}
+        status={message?.unread ? 'unread' : 'readed'}
       />
     );
   }, [current_chat, messages]);

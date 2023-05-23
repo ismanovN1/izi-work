@@ -1,10 +1,18 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+export const BASE_URL =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : 'https://izi-work.jcloud.kz/';
+
 export const API_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/api/' : 'https://izi-work-prod.onrender.com/api/';
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/api/' : 'https://izi-work.jcloud.kz/api/';
 
 export const instance = axios.create({
   baseURL: API_URL,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  },
 });
 
 export const makeQueryParams = (params: object = {}) => {

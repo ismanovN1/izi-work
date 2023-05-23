@@ -6,8 +6,9 @@ import { api } from 'api';
 import { instance } from 'api/init';
 import { setUser } from './auth-slice';
 
-export const registration_thunk = (data: any) => async (dispatch: AppDispatch) => {
+export const registration_thunk = (data: any, onSuccess?: () => void) => async (dispatch: AppDispatch) => {
   dispatch(startLoadings(REGISTRATION));
+  console.log('loppi');
 
   try {
     const res = await api.employer.auth.registration(data);
@@ -17,7 +18,7 @@ export const registration_thunk = (data: any) => async (dispatch: AppDispatch) =
       localStorage.setItem('@token', token);
       localStorage.setItem('@user_data', JSON.stringify(res.data));
       dispatch(setUser(res.data));
-      dispatch(setSuccess(REGISTRATION));
+      onSuccess?.();
     }
   } catch (error) {
     dispatch(setError({ [REGISTRATION]: getErrorMessage(error) }));

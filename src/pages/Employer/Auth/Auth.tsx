@@ -20,6 +20,7 @@ import { isMobile } from 'react-device-detect';
 interface FieldsI {
   email?: string;
   password?: string;
+  is_employer: boolean;
 }
 
 const Auth = () => {
@@ -28,7 +29,7 @@ const Auth = () => {
 
   const { loadings, successes, errors } = useAppSelector((state) => state.common);
 
-  const [fields, setFields] = useState<FieldsI>({});
+  const [fields, setFields] = useState<FieldsI>({ is_employer: true });
 
   useEffect(() => {
     if (successes[AUTHORIZATION]) {
@@ -80,7 +81,7 @@ const Auth = () => {
         <Button
           class_name="mt-40 mb-20"
           loading={loadings[AUTHORIZATION]}
-          disabled={Object.keys(checkObjValue(fields)).length !== 2}
+          disabled={Object.keys(checkObjValue(fields)).length < 2}
           onClick={onSubmit}
         >
           Войти

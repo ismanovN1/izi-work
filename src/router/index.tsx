@@ -33,7 +33,7 @@ import Profile from 'pages/JoobSeeker/profile';
 
 export default createBrowserRouter([
   {
-    path: '/employer',
+    path: '/',
     element: <Root />,
     children: [
       {
@@ -71,7 +71,7 @@ export default createBrowserRouter([
         element: <MyVacacies />,
         children: [
           {
-            index: true,
+            path: 'create',
             element: <MyVacaciesCreate />,
           },
           {
@@ -94,78 +94,72 @@ export default createBrowserRouter([
       },
     ],
   },
-  {
-    path: 'waiter',
-    element: <JoobSeekerRootPage />,
-    children: [
-      {
-        index: true,
-        element: <Main />,
-      },
-      {
-        path: 'auth',
-        element: <SeekerAuth />,
-      },
-      {
-        path: 'profile',
-        element: <Profile />,
-      },
-      {
-        path: 'resume',
-        element: <ResumeRoot />,
-        children: [
-          {
-            index: true,
-            element: <MyResume />,
-          },
-          {
-            path: 'create-edit',
-            element: <CreateResume />,
-          },
-        ],
-      },
-      {
-        path: 'account',
-        element: <Account />,
-      },
-      {
-        path: 'registr',
-        element: <SeekerRegistration />,
-      },
-      {
-        path: 'vacancies',
-        element: (
-          <>
-            <Outlet />
-          </>
-        ),
-        children: [
-          {
-            index: true,
-            element: <Job />,
-          },
-          {
-            path: ':vacancyId',
-            element: <VacancyDetail />,
-          },
-        ],
-      },
-      {
-        path: 'chat/:chatId',
-        element: <Chat />,
-      },
-      {
-        path: 'search-map',
-        element: <SearchJobInTheCard />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    loader: () => {
-      return redirect(isMobile ? '/waiter' : '/employer');
-    },
-  },
+  // {
+  //   path: 'waiter',
+  //   element: <JoobSeekerRootPage />,
+  //   children: [
+  //     {
+  //       index: true,
+  //       element: <Main />,
+  //     },
+  //     {
+  //       path: 'auth',
+  //       element: <SeekerAuth />,
+  //     },
+  //     {
+  //       path: 'profile',
+  //       element: <Profile />,
+  //     },
+  //     {
+  //       path: 'resume',
+  //       element: <ResumeRoot />,
+  //       children: [
+  //         {
+  //           index: true,
+  //           element: <MyResume />,
+  //         },
+  //         {
+  //           path: 'create-edit',
+  //           element: <CreateResume />,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: 'account',
+  //       element: <Account />,
+  //     },
+  //     {
+  //       path: 'registr',
+  //       element: <SeekerRegistration />,
+  //     },
+  //     {
+  //       path: 'vacancies',
+  //       element: (
+  //         <>
+  //           <Outlet />
+  //         </>
+  //       ),
+  //       children: [
+  //         {
+  //           index: true,
+  //           element: <Job />,
+  //         },
+  //         {
+  //           path: ':vacancyId',
+  //           element: <VacancyDetail />,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: 'chat/:chatId',
+  //       element: <Chat />,
+  //     },
+  //     {
+  //       path: 'search-map',
+  //       element: <SearchJobInTheCard />,
+  //     },
+  //   ],
+  // },
   {
     path: 'account/auth',
     element: <Auth />,

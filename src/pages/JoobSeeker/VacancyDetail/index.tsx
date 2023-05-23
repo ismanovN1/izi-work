@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import View from 'components/custom-components/View';
 import Image from 'components/custom-components/Image';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import { getCategoryImageById } from 'data/personals-data';
 import { VacancyI } from 'types/common';
 import BackIcon from 'assets/icons/back-arrow-white.svg';
 import ShareIcon from 'assets/icons/share-icon.svg';
@@ -12,7 +11,7 @@ import placemark from 'assets/icons/placemark.png';
 import PromtIcon from 'assets/icons/promt.svg';
 import FavoriteIcon from './FavoriteIcon';
 import Text from 'components/custom-components/Text';
-import { checkObjValue, formatSalary } from 'helpers/common';
+import { checkObjValue, formatSalary, get_def_images } from 'helpers/common';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
 import Button from 'components/custom-components/Button';
 import { RWebShare } from 'react-web-share';
@@ -46,7 +45,11 @@ const VacancyDetail = () => {
 
   useEffect(() => {
     if (vacancyId) {
-      dispatch(get_vacancy_by_id_thunk(vacancyId));
+      dispatch(
+        get_vacancy_by_id_thunk(vacancyId, (res) => {
+          setVacancy(res);
+        }),
+      );
     }
     return () => {
       dispatch(setCurrentRespond(undefined));
@@ -60,24 +63,11 @@ const VacancyDetail = () => {
   }, [vacancy, resume]);
 
   useEffect(() => {
-    if (vacancyId) {
-      dispatch(get_vacancy_by_id_thunk(vacancyId));
-    }
-  }, [vacancyId]);
-
-  useEffect(() => {
-    if (successes[GET_VACANCY_BY_ID]) {
-      setVacancy(successes[GET_VACANCY_BY_ID]);
-      dispatch(removeSuccess(GET_VACANCY_BY_ID));
-    }
-  }, [successes[GET_VACANCY_BY_ID]]);
-
-  useEffect(() => {
     if (successes[RESPOND]) {
       setShowSurvey(false);
       dispatch(removeSuccess(RESPOND));
     }
-  }, [successes[RESPOND]]);
+  }, [successes]);
 
   const respond = (action = {}) => {
     if (vacancy && resume) {
@@ -137,7 +127,7 @@ const VacancyDetail = () => {
       <View class_name="full-width fdc aic pb-80">
         <View class_name="fdc relative ais full-width">
           <Image
-            src={vacancy?.picture || getCategoryImageById(vacancy?._id)}
+            src={vacancy?.picture || get_def_images(vacancy.category_id)}
             height="auto"
             fit="cover"
             class_name="VacancyPhoto "
@@ -162,7 +152,7 @@ const VacancyDetail = () => {
           </View>
         </View>
 
-        <View class_name="mt-35 mb-10 ph-20u fdc">
+        <View class_name="mt-35 mb-10 ph-20responsive fdc">
           <Text H3 red>
             {formatSalary(vacancy.salary_from, vacancy.salary_to)}
           </Text>
@@ -227,7 +217,10 @@ const VacancyDetail = () => {
               onClick={() => {
                 if (!resume) setWarning('связаться с соискателем');
                 else {
-                  respond({ is_called: true });
+                  if (vacancy?.owner_id?.phone) window.open(`tel:+${vacancy.owner_id.phone}`);
+                  else {
+                    alert('Нет номера телефона');
+                  }
                 }
               }}
             >

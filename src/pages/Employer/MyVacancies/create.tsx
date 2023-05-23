@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, useEffect } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 
 // Components
 import View from 'components/custom-components/View';
@@ -9,10 +9,6 @@ import Button from 'components/custom-components/Button';
 import DocIcon from 'assets/icons/document.svg';
 import ModalCloseIcon from 'assets/icons/modal-close-dark.svg';
 import GoBackIcon from 'assets/icons/back-arrow.svg';
-import Input from 'components/custom-components/Input';
-import Image from 'components/custom-components/Image';
-import { categories } from 'data/categories-data';
-import Select from 'components/custom-components/Select';
 import SelectCategory from 'components/my-vacancies-components/select-categoy';
 import { VacancyI } from 'types/common';
 import Salary from 'components/my-vacancies-components/salary';
@@ -25,10 +21,10 @@ import SelectPhoto from 'components/my-vacancies-components/select-photo';
 import Finally from 'components/my-vacancies-components/finally';
 import PreviewVacancy from 'components/my-vacancies-components/preview-vacancy';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { addVacancy } from 'store/vacancies-store/vacancies-slice';
 import { create_vacancy_thunk, get_my_vacancies_thunk } from 'store/vacancies-store/vacancies-thunk';
 import { CREATE_VACANCY } from 'store/vacancies-store/constans';
-import { removeSuccess } from 'store/common-store/common-slice';
+import BackButton from 'components/ui/BackButton';
+import { useMatch } from 'react-router-dom';
 
 const getStepTitle = (step: number) => {
   switch (step) {
@@ -56,7 +52,9 @@ const getStepTitle = (step: number) => {
 const MyVacaciesCreate = () => {
   const dispatch = useAppDispatch();
 
-  const { loadings, successes, errors } = useAppSelector((state) => state.common);
+  const { loadings, errors } = useAppSelector((state) => state.common);
+
+  const focus = useMatch('/my-vacancies/create');
 
   // States
   const [createVacancy, setCreateVacancy] = useState(false);
@@ -204,7 +202,10 @@ const MyVacaciesCreate = () => {
   }, [disabled, step, loadings[CREATE_VACANCY]]);
 
   return (
-    <>
+    <div className={focus ? '' : 'd-none-on-mobile'}>
+      <View class_name="full-width mv-20">
+        <BackButton>Назад</BackButton>
+      </View>
       <View class_name="full-width full-height center">
         <View className="fdc ais" width={275}>
           <Text BodyM grey class_name="t-align-center">
@@ -255,7 +256,7 @@ const MyVacaciesCreate = () => {
           </View>
         )}
       </View>
-    </>
+    </div>
   );
 };
 

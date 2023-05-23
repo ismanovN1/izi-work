@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import View from 'components/custom-components/View';
 import { Carousel } from 'react-responsive-carousel';
 
@@ -16,6 +16,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFilter } from 'store/vacancies-store/vacancies-slice';
+import { setCompanyData } from 'store/company-store/company-slice';
+import { setIsAuth, setUser } from 'store/auth-store/auth-slice';
+import { instance } from 'api/init';
 
 const Main = () => {
   const dispatch = useAppDispatch();
@@ -23,12 +26,29 @@ const Main = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { categories } = useAppSelector((state) => state.common);
 
+  useEffect(() => {
+    if (user && !user.is_employer) {
+      const conf = window.confirm('Вы не можете продолжать как работодатель хотите выйти из своей учетной записи?');
+      if (conf) {
+        dispatch(setCompanyData());
+        dispatch(setIsAuth(false));
+        dispatch(setUser(undefined));
+        localStorage.removeItem('@user_data');
+        localStorage.removeItem('@token');
+        instance.defaults.headers.common.Authorization = '';
+        navigate('/');
+      } else {
+        window.open('https://employer.izi-work.kz');
+      }
+    }
+  }, []);
+
   const Categories = useCallback(
     () => (
       <View class_name={`d-flex pv-16 ${isMobile ? 'ovf-x-auto' : 'f-wrap'} hide-scrollbar ph-20u pb-70 full-width`}>
         {categories.map((item) => (
           <CategoryItem
-            icon={<Image src={item.icon} width="auto" height={30} />}
+            icon={<Image src={item.icon} class_name="h-30" width="auto" fit="cover" height="30px" />}
             key={item._id}
             onClick={() => {
               dispatch(setFilter({ category_id: item._id }));

@@ -10,20 +10,18 @@ import Button from 'components/custom-components/Button';
 import { formatSalary, parseSalaryPeriod, screen_height } from 'helpers/common';
 import Input from 'components/custom-components/Input';
 import { filter_icon_png, search_icon_png } from 'assets/icons/personals-icons';
-import { categories } from 'data/categories-data';
-import CategoryItem from 'components/personals-components/CategoryItem';
 import PersonalCard from 'components/personals-components/PersonalCard';
-import { personals } from 'data/personals-data';
-import { redirect, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { get_resume_by_id_thunk } from 'store/resume-store/resume-thunk';
 import { GET_RESUME_BY_ID } from 'store/resume-store/constans';
-import { removeSuccess } from 'store/common-store/common-slice';
 import { MoonLoader } from 'react-spinners';
 import ModalCard from 'components/ui/ModalCard';
+import './index.scss';
 
 // Images & Icons
 import PromtIcon from 'assets/icons/promt.svg';
+import BackButton from 'components/ui/BackButton';
 
 const PersonalDetail = () => {
   const { personalId } = useParams();
@@ -32,7 +30,7 @@ const PersonalDetail = () => {
 
   const { isAuth } = useAppSelector((s) => s.auth);
   const { resumes } = useAppSelector((s) => s.resume);
-  const { loadings, successes, errors } = useAppSelector((s) => s.common);
+  const { loadings, categories } = useAppSelector((s) => s.common);
 
   const [personal, setPersonal] = useState<any>();
   const [warning, setWarning] = useState('');
@@ -41,21 +39,19 @@ const PersonalDetail = () => {
   const randomPersonal2 = useMemo(() => resumes[Math.ceil(Math.random() * (resumes.length - 1))], [personalId]);
 
   useEffect(() => {
-    if (successes[GET_RESUME_BY_ID]) {
-      setPersonal(successes[GET_RESUME_BY_ID]);
-      dispatch(removeSuccess(GET_RESUME_BY_ID));
-    }
-  }, [successes[GET_RESUME_BY_ID]]);
-  useEffect(() => {
     if (personalId) {
-      dispatch(get_resume_by_id_thunk(personalId));
+      dispatch(get_resume_by_id_thunk(personalId, (res) => setPersonal(res)));
     }
   }, [personalId]);
 
   return (
-    <View class_name="full-width relative pt-45u pb-80 d-flex jcc" minHeight={screen_height - 286}>
+    <View
+      class_name="full-width relative pt-45u pb-80 d-flex jcc waiter-detail-container"
+      minHeight={screen_height - 286}
+    >
       <View maxWidth={1100} width="100%">
-        <View class_name="space-b full-width" onMouseDown={() => navigate('/employer/personals')}>
+        <BackButton class_name="mv-10">Назад</BackButton>
+        <View class_name="space-b full-width d-none-on-mobile" onMouseDown={() => navigate('/personals')}>
           <Button width={265} type="outline" leftIcon={<Image width={20.7} src={filter_icon_png} />}>
             Фильтр
           </Button>
@@ -71,12 +67,12 @@ const PersonalDetail = () => {
             <MoonLoader color="#038ca9" size={32} />
           </View>
         ) : personal ? (
-          <View class_name="d-flex jcsb full-width mt-40u">
-            <View card class_name="flex-1 p-20u relative d-flex jcsb">
+          <View class_name="d-flex jcsb full-width mt-40u ">
+            <View card class_name="flex-1 p-20u relative d-flex jcsb waiter-detail">
               <View class_name="absolute pointer" top={10} right={15}>
                 ☆
               </View>
-              <View class_name="fdc mr-30u">
+              <View class_name="fdc mr-30u image-container">
                 <View class_name={'br-10 ovf-hidden'}>
                   <Image src={personal.picture} fit="cover" width={234} height={234} />
                 </View>
@@ -97,6 +93,11 @@ const PersonalDetail = () => {
                   onClick={() => {
                     if (!isAuth) {
                       setWarning('Позвонить');
+                    } else {
+                      if (personal?.owner_id?.phone) window.open(`tel:+${personal.owner_id.phone}`);
+                      else {
+                        alert('Нет номера телефона');
+                      }
                     }
                   }}
                 >
@@ -127,23 +128,23 @@ const PersonalDetail = () => {
                 </View>
               </View>
             </View>
-            <View class_name="fdc ml-22u">
+            <View class_name="fdc ml-22u d-none-on-mobile">
               <Text BodyB>Похожие вакансии</Text>
               {randomPersonal1 ? (
                 <PersonalCard
                   class_name="mv-19u"
                   person={randomPersonal1}
-                  onClick={() => navigate(`/employer/personals/${randomPersonal1._id}`)}
+                  onClick={() => navigate(`/personals/${randomPersonal1._id}`)}
                 />
               ) : null}
               {randomPersonal2 ? (
                 <PersonalCard
                   class_name="mb-19u"
                   person={randomPersonal2}
-                  onClick={() => navigate(`/employer/personals/${randomPersonal2._id}`)}
+                  onClick={() => navigate(`/personals/${randomPersonal2._id}`)}
                 />
               ) : null}
-              <Button onClick={() => navigate('/employer/personals')}>Посмотреть ещё</Button>
+              <Button onClick={() => navigate('/personals')}>Посмотреть ещё</Button>
             </View>
           </View>
         ) : null}

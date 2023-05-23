@@ -19,6 +19,7 @@ import { checkObjValue } from 'helpers/common';
 import { create_company_thunk, update_company_thunk } from 'store/company-store/company-thunk';
 import { CREATE_COMPANY, UPDATE_COMPANY } from 'store/company-store/constans';
 import { removeSuccess } from 'store/common-store/common-slice';
+import './index.scss';
 
 interface FieldsI {
   name?: string;
@@ -39,7 +40,7 @@ const CreateEditCompany = () => {
     if (successes[CREATE_COMPANY] || successes[UPDATE_COMPANY]) {
       dispatch(removeSuccess(CREATE_COMPANY));
       dispatch(removeSuccess(UPDATE_COMPANY));
-      navigate('/employer/my-company');
+      navigate('/my-company');
     }
   }, [successes]);
 
@@ -52,7 +53,7 @@ const CreateEditCompany = () => {
 
   const onSubmit = () => {
     if (isEmpty) {
-      navigate('/employer');
+      navigate('/');
       return;
     }
     if (company_data) {
@@ -66,13 +67,13 @@ const CreateEditCompany = () => {
   };
 
   return (
-    <View class_name="full-width fdc aic p-40">
+    <View class_name="full-width fdc aic p-40 create-my-company">
       <NavLink to="/">
         <Logo />
       </NavLink>
-      <View card class_name="fdc aic mt-60 pv-40 ph-30" minHeight={482} width={530}>
+      <View card class_name="fdc aic mt-60 pv-40 ph-30 create-my-company-card" minHeight={482} width={530}>
         <Text H2>О компании</Text>
-        <View class_name="mt-20 full-width d-flex ais">
+        <View class_name="mt-20 full-width d-flex ais f-wrap">
           <View class_name="mr-30">
             <Text SubtitleM class_name="mb-14">
               Фото

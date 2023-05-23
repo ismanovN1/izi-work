@@ -59,7 +59,15 @@ const Button: React.FC<PropsT> = ({
   return (
     <div className={class_name_memo} onClick={onClickHandler} onKeyDown={onKeyDown} style={{ ...style_memo, ...style }}>
       {leftIcon ? <div className="left-icon center">{leftIcon}</div> : <div />}
-      <div className="center flex-1">{typeof children === 'string' ? <Text Button>{children}</Text> : children}</div>
+      <div className="center flex-1">
+        {typeof children === 'string' ? (
+          <Text Button class_name="t-align-center">
+            {children}
+          </Text>
+        ) : (
+          children
+        )}
+      </div>
       {loading ? (
         <View width={32} height={32} class_name="p-15">
           <FadeLoader height={7} margin={-10} width={2} color={color || 'white'} />

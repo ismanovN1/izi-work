@@ -12,15 +12,11 @@
 
 .close-button {
   display: none;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  cursor: pointer;
 }
 
 @media (max-width: 1120px) {
   .nav-bar-inner-container {
-    padding: 0 16px;
+    padding: 0 16px !important;
   }
   .menu-container {
     position: fixed;
@@ -56,6 +52,10 @@
         color: black !important;
       }
 
+      .ExtraSmallM {
+        color: #fff !important;
+      }
+
       > svg {
         path {
           fill: rgba(3, 140, 169, 1);
@@ -64,8 +64,18 @@
     }
 
     .close-button {
-      display: block;
+      display: flex;
+      position: absolute;
+      justify-content: space-between;
+      width: 100vw;
+      padding: 0 16px !important;
+      left: 0;
+      top: 24px;
+      cursor: pointer;
       z-index: 10;
+      span {
+        color: #038ca9 !important;
+      }
     }
   }
 

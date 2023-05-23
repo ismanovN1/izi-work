@@ -21,6 +21,7 @@ import placemarkC from 'assets/icons/placemark-c.png';
 import './index.scss';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { setFilterParams } from 'store/resume-store/resume-slice';
+import { useNavigate } from 'react-router-dom';
 
 type propsType = {
   visible?: boolean;
@@ -29,6 +30,7 @@ type propsType = {
 let tId: any;
 const Filter: React.FC<propsType> = ({ visible, onClose }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const mapRef = useRef<any>(null);
 
   const { categories } = useAppSelector((state) => state.common);
@@ -37,6 +39,7 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
   const [myPosition, setMyPosition] = useState<any>();
   const [currentPosition, setCurrentPosition] = useState<any>();
   const [category, setCategoty] = useState<any>();
+  const [show_map, set_show_map] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -69,8 +72,8 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
   if (!visible) return null;
   return (
     <View class_name="filter-modal">
-      <View maxWidth={1100}>
-        <View class_name="full-width space-b  mt-44 mb-20">
+      <View maxWidth={1100} width="100%">
+        <View class_name="full-width space-b  mt-44 mb-20 filter-header">
           <Text H2 white>
             Фильтр
           </Text>
@@ -79,8 +82,8 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
           </View>
         </View>
 
-        <View class_name="d-flex ais full-width" height={818}>
-          <View class_name="p-20u" card width={275} height="100%">
+        <View class_name="d-flex ais full-width filter-body" height={818}>
+          <View class_name={`p-20u filter-parametrs ${show_map ? 'd-none-card' : ''}`} card width={275} height="100%">
             <Text SubtitleB>Поиск сотрудника</Text>
             <Text DescriptionM class_name="mt-25 mb-9">
               Выберите категорию
@@ -135,7 +138,7 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
             />
             <Button
               leftIcon={<LocationIcon />}
-              class_name="mt-30"
+              class_name="mt-30 d-none-on-mobile"
               onClick={() => {
                 if (myPosition) {
                   onChangeField({
@@ -149,8 +152,17 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
             >
               Сотрудник рядом
             </Button>
+            <Button
+              leftIcon={<LocationIcon />}
+              class_name="mt-30 d-none d-flex-on-mobile"
+              onClick={() => {
+                set_show_map(true);
+              }}
+            >
+              Показать карту
+            </Button>
           </View>
-          <View class_name="br-8 flex-1 ml-20u ovf-hidden bg-red" height={818}>
+          <View class_name="br-8 f-grow-1 ml-20u ovf-hidden bg-blue map-container" height={818}>
             <YMaps>
               <Map
                 instanceRef={(ref) => (mapRef.current = ref)}
@@ -173,6 +185,7 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
                   <Placemark
                     geometry={[...(item.location?.coordinates || [])].reverse()}
                     key={item._id}
+                    onClick={() => navigate(`/personals/${item._id}`)}
                     options={{
                       iconLayout: 'default#image',
                       iconImageHref: placemarkI,
@@ -184,6 +197,34 @@ const Filter: React.FC<propsType> = ({ visible, onClose }) => {
               </Map>
             </YMaps>
           </View>
+          {show_map ? null : <View class_name="cover" />}
+          {show_map ? (
+            <div className="show_filter_params_button">
+              <Button
+                leftIcon={<LocationIcon />}
+                class_name="mb-15"
+                onClick={() => {
+                  if (myPosition) {
+                    onChangeField({
+                      lat: myPosition[0],
+                      lon: myPosition[1],
+                      distance: 25000,
+                    });
+                    mapRef.current?.setCenter(myPosition, 11);
+                  }
+                }}
+              >
+                Сотрудник рядом
+              </Button>
+              <Button
+                onClick={() => {
+                  set_show_map(false);
+                }}
+              >
+                Показать параметры
+              </Button>
+            </div>
+          ) : null}
         </View>
       </View>
     </View>

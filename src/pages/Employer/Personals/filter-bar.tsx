@@ -57,7 +57,7 @@ const FilterBar: React.FC<propsType> = ({ setShowFilter }) => {
       <View class_name={`d-flex pt-30 pb-30 ${isMobile ? 'ovf-x-auto' : 'f-wrap'} hide-scrollbar full-width`}>
         {categories.map((item) => (
           <CategoryItem
-            icon={<Image src={item.icon} width="auto" />}
+            icon={<Image src={item.icon} width="auto" class_name="h-30" fit="cover" height="30px" />}
             key={item._id}
             active={filter_params.category_id === item._id}
             onClick={() => {

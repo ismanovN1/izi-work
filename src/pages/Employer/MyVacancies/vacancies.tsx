@@ -6,12 +6,12 @@ import Text from 'components/custom-components/Text';
 import { NavLink, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import VacancyItem from 'components/my-vacancies-components/vacancy-item';
 import CandidateItem from 'components/my-vacancies-components/candidate-item';
-import { getCategoryImageById } from 'data/personals-data';
 import CandidateCard from 'components/my-vacancies-components/candidate-card';
 import PreviewVacancy from 'components/my-vacancies-components/preview-vacancy';
 import { useAppSelector } from 'hooks';
-import { formatSalary } from 'helpers/common';
+import { formatSalary, get_def_images } from 'helpers/common';
 import VacancyDetail from './vacancy_detail';
+import BackButton from 'components/ui/BackButton';
 
 // helpers
 
@@ -36,11 +36,12 @@ const Vacancies: React.FC<{ status: 'ACTIVE' | 'CLOSED' | 'ARCHIVED' }> = ({ sta
 
   return (
     <View class_name="full-width full-height d-flex">
-      <View width={275} class_name="fdc ais ml-10">
-        <View class_name="h-50 pt-22 ph-20">
+      <View width={275} class_name={`select-vacancy  fdc ais ml-10 ${vacancy_id ? 'd-none-on-mobile' : ''}`}>
+        <View class_name="d-flex aic h-50 pt-22 ph-20">
+          <BackButton />
           <Text SubtitleB>Выберите вакансию</Text>
         </View>
-        <View class_name="fdc ovf-y-auto ph-10 pt-10">
+        <View class_name="fdc ovf-y-auto ph-10 pt-10 ">
           {my_vacancies.length ? (
             my_vacancies.map((item) => (
               <VacancyItem
@@ -52,7 +53,7 @@ const Vacancies: React.FC<{ status: 'ACTIVE' | 'CLOSED' | 'ARCHIVED' }> = ({ sta
                 onClick={() => {
                   setSearchParams(`vacancy_id=${item._id}`);
                 }}
-                src={item.picture}
+                src={item.picture || get_def_images(item.category_id)}
               />
             ))
           ) : (

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 // Components
 import View from 'components/custom-components/View';
@@ -23,17 +23,12 @@ export const ChatMessages: React.FC<any> = () => {
   const { loadings } = useAppSelector((s) => s.common);
   const { user } = useAppSelector((s) => s.auth);
   const { messages, current_chat } = useAppSelector((s) => s.chat);
-  console.log(current_chat);
-
-  const current_messages = useMemo(
-    () => (messages[messages.length - 1]?.user_id === user._id ? messages.slice(0, messages.length - 1) : messages),
-    [messages],
-  );
 
   const FirstMessage = useCallback(() => {
+    const message = messages[messages.length - 1];
     return (
       <MyMessage
-        updated={moment(messages[messages.length - 1].created_at).format('HH:mm')}
+        updated={moment(message?.created_at).format('HH:mm')}
         custom_element={
           <View maxWidth={312}>
             <View class_name="f-shrink-0 d-flex">
@@ -46,11 +41,11 @@ export const ChatMessages: React.FC<any> = () => {
               </View>
             </View>
             <Text Description class_name="mt-20">
-              {messages[messages.length - 1]?.message}
+              {message?.message}
             </Text>
           </View>
         }
-        status={messages[messages.length - 1]?.unread ? 'unread' : 'readed'}
+        status={message?.unread ? 'unread' : 'readed'}
       />
     );
   }, [current_chat, messages]);
@@ -62,19 +57,21 @@ export const ChatMessages: React.FC<any> = () => {
           <MoonLoader color="#038CA9" size={32} />
         </View>
       ) : null}
-      {current_messages?.map((item) =>
-        item.user_id === user._id ? (
-          <MyMessage
-            key={item._id}
-            message={item.message}
-            updated={moment(item.created_at).format('hh:mm')}
-            status={item.unread ? 'unread' : 'readed'}
-          />
-        ) : (
-          <MeMessage key={item._id} message={item.message} updated={moment(item.created_at).format('HH:mm')} />
-        ),
-      )}
-      {messages[messages.length - 1]?.user_id === user._id ? <FirstMessage /> : null}
+      {messages
+        .slice(0, messages.length - 1)
+        ?.map((item) =>
+          item.user_id === user._id ? (
+            <MyMessage
+              key={item._id}
+              message={item.message}
+              updated={moment(item.created_at).format('hh:mm')}
+              status={item.unread ? 'unread' : 'readed'}
+            />
+          ) : (
+            <MeMessage key={item._id} message={item.message} updated={moment(item.created_at).format('HH:mm')} />
+          ),
+        )}
+      <FirstMessage />
     </View>
   );
 };

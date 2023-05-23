@@ -10,7 +10,6 @@ import Text from 'components/custom-components/Text';
 import BackIcon from 'assets/icons/back-arrow-blue.svg';
 
 // Styles
-import './index.scss';
 import { ChatHeader } from './header';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
@@ -23,8 +22,6 @@ const ChatBody = () => {
   const dispatch = useAppDispatch();
 
   const { chatId } = useParams();
-
-  const { current_chat, chat_list } = useAppSelector((s) => s.chat);
 
   useEffect(() => {
     if (chatId) {

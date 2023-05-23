@@ -32,7 +32,7 @@ const ChatList: React.FC<{}> = () => {
     return (
       <View
         bg={chatId === item._id ? '#E6F3F6' : '#F9F9FA'}
-        class_name="ph-10 h-52 d-flex aic relative mt-10 br-10 ovf-hidden"
+        class_name="ph-10 h-52 d-flex aic relative mt-10 br-10 ovf-hidden relative"
         onClick={() => {
           navigate(item._id);
         }}
@@ -47,6 +47,13 @@ const ChatList: React.FC<{}> = () => {
         <Text class_name="chat-item-created-date" Small grey>
           {item.created_at ? moment(item.created_at).format('dd hh:mm') : 'sd'}
         </Text>
+        {item.unread_count_e ? (
+          <View class_name={'unread'}>
+            <Text white ExtraSmallM>
+              {item.unread_count_e}
+            </Text>
+          </View>
+        ) : null}
       </View>
     );
   };

@@ -1,3 +1,4 @@
+import { BASE_URL } from 'api/init';
 import moment from 'moment';
 import { isMobile } from 'react-device-detect';
 
@@ -55,6 +56,12 @@ export const formatCreatedAt = (created_at: string) => {
 
 export const getErrorMessage = (error: any) => {
   return (
-    (typeof error.response?.data === 'object' ? error.response.data.message : error.response?.data) || error.message
+    (typeof error?.response?.data === 'object' ? error?.response?.data?.message : error?.response?.data) ||
+    error?.message ||
+    'Неизвестная ошибка'
   );
+};
+
+export const get_def_images = (categoryId) => {
+  return `${BASE_URL}default_images/${categoryId}`;
 };

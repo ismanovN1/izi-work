@@ -19,7 +19,7 @@ const CategoriesList: React.FC<propsType> = () => {
     <View class_name={`d-flex pv-16 ${isMobile ? 'ovf-x-auto' : 'f-wrap'} hide-scrollbar ph-20u full-width`}>
       {categories.map((item) => (
         <CategoryItem
-          icon={<Image src={item.icon} width="auto" height={30} />}
+          icon={<Image src={item.icon} width="auto" class_name="h-30" fit="cover" height="30px" />}
           key={item._id}
           active={item._id === filter_params.category_id}
           onClick={() => {
