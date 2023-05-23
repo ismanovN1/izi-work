@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React, { useState, useRef, useEffect } from 'react';
 
 // Components
 import View from 'components/custom-components/View';
@@ -18,11 +19,48 @@ const SearchJobInTheCard = () => {
 
   const mapRef = useRef(null);
   const ymaps = useRef(null);
+  const placemarkRef = useRef<any>(null);
 
   const [template, setTemplate] = useState<any>();
+  const [current_coordinates, set_current_coordinates] = useState<any>();
 
   const { resume } = useAppSelector((state) => state.resume);
   const { vacancies_nearby } = useAppSelector((state) => state.vacancies);
+
+  useEffect(() => {
+    set_current_coordinates(resume?.address?.coords || [43.2220146, 76.8512485]);
+  }, [resume]);
+
+  const createPlacemark = (coords: any): any => {
+    if (!ymaps.current) return null;
+    return new ymaps.current.Placemark(
+      coords,
+      {
+        iconCaption: 'loading..',
+      },
+      {
+        iconLayout: 'default#image',
+        iconImageHref: placemarkI,
+        iconImageSize: [29, 42.43],
+        iconImageOffset: [-18, -42],
+      },
+    );
+  };
+
+  const setMark = (coords: any) => {
+    if (placemarkRef.current) {
+      placemarkRef.current.geometry?.setCoordinates(coords);
+    } else {
+      placemarkRef.current = createPlacemark(coords);
+      mapRef.current.geoObjects.add(placemarkRef.current);
+    }
+  };
+
+  const onMapClick = (e) => {
+    const coords = e.get('coords');
+    setMark(coords);
+    set_current_coordinates(coords);
+  };
 
   return (
     <View class_name="full-width fdc ais" height={'calc(100vh - 65px)'}>
@@ -31,12 +69,12 @@ const SearchJobInTheCard = () => {
           <Text class_name="f-grow-1 mr-20" white Subtitle>
             {resume?.address.name}
           </Text>
-          <View class_name="pointer" onClick={() => navigate('/waiter/resume/create-edit')}>
+          <View class_name="pointer" onClick={() => navigate('/resume/create-edit')}>
             <PenIcon />
           </View>
         </View>
       )}
-      <CSlider coords={resume?.address?.coords} />
+      <CSlider coords={current_coordinates} />
       <View width="100%" class_name="f-grow-1">
         <YMaps>
           <Map
@@ -44,25 +82,18 @@ const SearchJobInTheCard = () => {
             width={'100%'}
             height={'100%'}
             instanceRef={(ref) => (mapRef.current = ref)}
+            onClick={onMapClick}
             onLoad={(ympasInstance) => {
               ymaps.current = ympasInstance;
               setTemplate(ympasInstance.templateLayoutFactory.createClass);
+              setMark(current_coordinates || [43.2220146, 76.8512485]);
             }}
-            modules={['templateLayoutFactory', 'layout.ImageWithContent']}
+            modules={['templateLayoutFactory', 'layout.ImageWithContent', 'Placemark', 'geocode']}
           >
-            <Placemark
-              geometry={resume?.address?.coords || [43.2220146, 76.8512485]}
-              options={{
-                iconLayout: 'default#image',
-                iconImageHref: placemarkI,
-                iconImageSize: [29, 42.43],
-                iconImageOffset: [-18, -42],
-              }}
-            />
             {vacancies_nearby?.map((item) => (
               <Placemark
                 key={item._id}
-                onClick={() => navigate(`/waiter/vacancies/${item._id}`)}
+                onClick={() => navigate(`/vacancies/${item._id}`)}
                 geometry={[...(item.location?.coordinates || [])].reverse()}
               />
             ))}

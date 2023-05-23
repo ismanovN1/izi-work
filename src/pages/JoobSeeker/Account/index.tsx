@@ -24,7 +24,7 @@ const Account = () => {
 
   useEffect(() => {
     if (!isAuth) {
-      navigate('/waiter/auth');
+      navigate('/auth');
     } else {
       dispatch(get_my_resume_thunk());
     }
@@ -40,7 +40,7 @@ const Account = () => {
       <Button
         loading={loadings[GET_MY_RESUME]}
         leftIcon={resume ? <ResumeIcon /> : <CreateResumeIcon />}
-        onClick={() => navigate(`/waiter/${resume ? 'resume' : 'resume/create-edit'}`)}
+        onClick={() => navigate(`/${resume ? 'resume' : 'resume/create-edit'}`)}
       >
         {resume ? 'Моё резюме' : 'Создать резюме'}
       </Button>
@@ -48,11 +48,11 @@ const Account = () => {
         leftIcon={<MyResponseIcon />}
         class_name="mv-20"
         bg={'green'}
-        onClick={() => navigate('/waiter/vacancies?mode=MY_RESPONSES')}
+        onClick={() => navigate('/vacancies?mode=MY_RESPONSES')}
       >
         Мои отклики
       </Button>
-      <Button leftIcon={<FavoriteIcon />} bg={'red'} onClick={() => navigate('/waiter/vacancies?mode=FAVORITES')}>
+      <Button leftIcon={<FavoriteIcon />} bg={'red'} onClick={() => navigate('/vacancies?mode=FAVORITES')}>
         Избранное
       </Button>
 

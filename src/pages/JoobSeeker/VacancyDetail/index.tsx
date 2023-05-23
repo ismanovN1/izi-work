@@ -90,7 +90,7 @@ const VacancyDetail = () => {
   };
 
   const go_to_chat = (chatId: string) => {
-    navigate(`/waiter/chat/${chatId}`);
+    navigate(`/chat/${chatId}`);
   };
 
   const RenderRow: React.FC<any> = ({ title, children }) => {
@@ -199,7 +199,7 @@ const VacancyDetail = () => {
           <View class_name="space-b mb-20 mt-30 full-width">
             <Button
               bg="green"
-              class_name="f-grow-1 mr-20"
+              width="48%"
               loading={loadings[RESPOND]}
               disabled={current_respond?.is_responded}
               onClick={() => {
@@ -212,7 +212,7 @@ const VacancyDetail = () => {
               {current_respond?.is_responded ? 'Вы откликнулись' : 'Откликнуться'}
             </Button>
             <Button
-              class_name="f-grow-1"
+              width="48%"
               loading={loadings[RESPOND]}
               onClick={() => {
                 if (!resume) setWarning('связаться с соискателем');
@@ -286,7 +286,7 @@ const VacancyDetail = () => {
               BodyBlack
               class_name="mv-74 t-align-center ph-10u"
             >{`Что бы ${warning}, Вам необходимо пройти первичную регистрацию и создать резюме `}</Text>
-            <Button bg="red" onClick={() => navigate(!user ? '/waiter/registr' : '/waiter/resume/create-edit')}>
+            <Button bg="red" onClick={() => navigate(!user ? '/registr' : '/resume/create-edit')}>
               {!user ? 'Регистрация' : 'Cоздать резюме'}
             </Button>
           </View>

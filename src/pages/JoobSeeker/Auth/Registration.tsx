@@ -36,7 +36,7 @@ const Registration = () => {
     if (successes[REGISTRATION]) {
       dispatch(setIsAuth(true));
       dispatch(removeSuccess(REGISTRATION));
-      navigate('/waiter/account');
+      navigate('/account');
     }
   }, [successes[REGISTRATION]]);
 

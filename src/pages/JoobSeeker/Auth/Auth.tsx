@@ -31,7 +31,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (successes[AUTHORIZATION]) {
-      navigate('/waiter');
+      navigate('/');
       dispatch(setIsAuth(true));
       dispatch(removeSuccess(AUTHORIZATION));
     }
@@ -77,7 +77,7 @@ const Auth = () => {
         Войти
       </Button>
 
-      <NavLink to="/waiter/registr">
+      <NavLink to="/registr">
         <Text red Description class_name="full-width t-align-center mt-20 text-decoration-underline">
           Забыли пароль
         </Text>

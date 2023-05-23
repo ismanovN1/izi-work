@@ -66,7 +66,7 @@ const CreateResume = () => {
   useEffect(() => {
     if (successes[CREATE_RESUME]) {
       dispatch(get_my_resume_thunk());
-      navigate('/waiter/resume');
+      navigate('/resume');
       dispatch(removeSuccess(CREATE_RESUME));
       clear();
     }
