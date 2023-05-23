@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { isMobile } from 'react-device-detect';
 import { get_my_vacancies_thunk } from 'store/vacancies-store/vacancies-thunk';
 import { get_my_favorite_resumes_ids_thunk } from 'store/action-store/action-thunk';
+import { get_my_chats_thunk } from 'store/chat-store/chat-thunk';
 
 const Root = () => {
   const { isAuth } = useAppSelector((state) => state.auth);
@@ -19,6 +20,7 @@ const Root = () => {
   useEffect(() => {
     if (isAuth) {
       dispatch(get_my_vacancies_thunk());
+      dispatch(get_my_chats_thunk());
       dispatch(get_my_favorite_resumes_ids_thunk());
     }
   }, [isAuth]);

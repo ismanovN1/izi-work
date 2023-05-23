@@ -10,6 +10,7 @@ import { setIsAuth, setUser } from 'store/auth-store/auth-slice';
 import View from 'components/custom-components/View';
 import { RingLoader } from 'react-spinners';
 import SocketWrapper from './SocketWrapper';
+import { get_my_chats_thunk } from 'store/chat-store/chat-thunk';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const App = () => {
         instance.defaults.headers.common.Authorization = token;
         dispatch(setIsAuth(true));
         dispatch(setUser(JSON.parse(user_data)));
+        dispatch(get_my_chats_thunk());
       }
       dispatch(get_categories_thunk());
       setLoaded(true);
