@@ -131,7 +131,13 @@ const Select: React.FC<PropsT> = ({
           ))}
         </View>
       ) : null}
-      <input ref={inputRef} onBlur={() => setOpen(false)} onFocus={() => setOpen(true)} className="helper-input" />
+      <input
+        ref={inputRef}
+        onBlur={() => setOpen(false)}
+        onFocus={() => setOpen(true)}
+        className="helper-input"
+        readOnly
+      />
     </View>
   );
 };

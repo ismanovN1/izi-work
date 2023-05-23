@@ -31,21 +31,18 @@ const Auth = () => {
 
   const [fields, setFields] = useState<FieldsI>({ is_employer: true });
 
-  useEffect(() => {
-    if (successes[AUTHORIZATION]) {
-      dispatch(setIsAuth(true));
-      navigate('/');
-      dispatch(removeSuccess(AUTHORIZATION));
-    }
-  }, [successes[AUTHORIZATION]]);
-
   const onChangeField = (field: Partial<FieldsI>) => {
     setFields((prev) => ({ ...prev, ...field }));
   };
 
   const onSubmit = () => {
     dispatch(removeError(AUTHORIZATION));
-    dispatch(authorization_thunk(fields));
+    dispatch(
+      authorization_thunk(fields, () => {
+        dispatch(setIsAuth(true));
+        navigate('/');
+      }),
+    );
   };
 
   return (

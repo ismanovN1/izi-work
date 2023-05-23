@@ -39,7 +39,7 @@ const AccountCard = () => {
         </View>
       </View>
       <View class_name="buttons-area ">
-        <NavLink to="/waiter/profile" className="flex-1 center pointer">
+        <NavLink to="/profile" className="flex-1 center pointer">
           <Text SubtitleM blue>
             Мои данные
           </Text>

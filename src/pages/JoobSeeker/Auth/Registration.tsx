@@ -32,14 +32,6 @@ const Registration = () => {
 
   const [fields, setFields] = useState<FieldsI>({});
 
-  useEffect(() => {
-    if (successes[REGISTRATION]) {
-      dispatch(setIsAuth(true));
-      dispatch(removeSuccess(REGISTRATION));
-      navigate('/account');
-    }
-  }, [successes[REGISTRATION]]);
-
   const onChangeField = (field: Partial<FieldsI>) => {
     setFields((prev) => ({ ...prev, ...field }));
   };
@@ -47,7 +39,12 @@ const Registration = () => {
   const onSubmit = () => {
     dispatch(removeError(REGISTRATION));
     const { repass, ...restFields } = fields;
-    dispatch(registration_thunk(restFields));
+    dispatch(
+      registration_thunk(restFields, () => {
+        dispatch(setIsAuth(true));
+        navigate('/account');
+      }),
+    );
   };
 
   return (

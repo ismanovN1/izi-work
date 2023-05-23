@@ -27,7 +27,7 @@ export const registration_thunk = (data: any, onSuccess?: () => void) => async (
   }
 };
 
-export const authorization_thunk = (data: any) => async (dispatch: AppDispatch) => {
+export const authorization_thunk = (data: any, onSuccess: () => void) => async (dispatch: AppDispatch) => {
   dispatch(startLoadings(AUTHORIZATION));
 
   try {
@@ -38,7 +38,7 @@ export const authorization_thunk = (data: any) => async (dispatch: AppDispatch) 
       localStorage.setItem('@token', token);
       localStorage.setItem('@user_data', JSON.stringify(res.data));
       dispatch(setUser(res.data));
-      dispatch(setSuccess(AUTHORIZATION));
+      onSuccess?.();
     }
   } catch (error) {
     dispatch(setError({ [AUTHORIZATION]: getErrorMessage(error) }));

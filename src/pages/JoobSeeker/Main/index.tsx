@@ -27,7 +27,7 @@ const Main = () => {
   const { categories } = useAppSelector((state) => state.common);
 
   useEffect(() => {
-    if (user && !user.is_employer) {
+    if (user && user.is_employer) {
       const conf = window.confirm('Вы не можете продолжать как работодатель хотите выйти из своей учетной записи?');
       if (conf) {
         dispatch(setCompanyData());

@@ -19,7 +19,7 @@ export const get_chat_thunk = (params: any, onSuccess?: (chatId: string) => void
 
   try {
     const res = await api.employer.chat.get_chat(params);
-    if (res.status === 200 && res.data?._id) {
+    if (res?.status === 200 && res.data?._id) {
       onSuccess?.(res.data?._id);
       dispatch(setCurrentChat(res.data));
     }

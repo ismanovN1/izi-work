@@ -239,13 +239,13 @@ const VacancyDetail = () => {
               else {
                 if (current_respond?.chat_id)
                   dispatch(get_chat_thunk({ chat_id: current_respond?.chat_id }, go_to_chat));
-                else if (resume && vacancy) {
+                else if (resume && vacancy && vacancy.owner_id?._id) {
                   dispatch(
                     get_chat_thunk(
                       {
                         resume_id: resume._id,
                         waiter_id: resume.owner_id,
-                        employer_id: vacancy.owner_id,
+                        employer_id: vacancy.owner_id?._id,
                         vacancy_id: vacancy._id,
                       },
                       go_to_chat,
