@@ -13,6 +13,7 @@ type message_type = {
 type chat_type = {
   _id: string;
   employer_id: string;
+  last_message: any;
   waiter_id: string;
   vacancy_id: any;
   resume_id: any;

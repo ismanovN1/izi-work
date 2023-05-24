@@ -30,6 +30,7 @@ import CreateResume from 'pages/JoobSeeker/Resume/create-resume';
 import ResumeRoot from 'pages/JoobSeeker/Resume';
 import MyResume from 'pages/JoobSeeker/Resume/my-resume';
 import Profile from 'pages/JoobSeeker/profile';
+import WaiterChatList from 'pages/JoobSeeker/Chat/chat_list';
 
 export default createBrowserRouter([
   // {
@@ -153,6 +154,10 @@ export default createBrowserRouter([
       {
         path: 'chat/:chatId',
         element: <Chat />,
+      },
+      {
+        path: 'chat-list',
+        element: <WaiterChatList />,
       },
       {
         path: 'search-map',

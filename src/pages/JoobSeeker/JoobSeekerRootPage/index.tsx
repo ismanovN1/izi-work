@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import View from 'components/custom-components/View';
 import { NavLink, Outlet } from 'react-router-dom';
 import Logo from 'assets/icons/logo.svg';
@@ -9,15 +9,23 @@ import Image from 'components/custom-components/Image';
 import { isMobile } from 'react-device-detect';
 import { get_my_resume_thunk } from 'store/resume-store/resume-thunk';
 import { get_my_favorite_vacancies_thunk } from 'store/vacancies-store/vacancies-thunk';
+import Text from 'components/custom-components/Text';
 
 const JoobSeekerRootPage = () => {
   const navRef = useRef(null);
 
   const dispatch = useAppDispatch();
 
+  const { unread_messages } = useAppSelector((state) => state.chat);
+
   const { user, isAuth } = useAppSelector((state) => state.auth);
 
   useScrollToTop();
+
+  const unread_count = useMemo(
+    () => Object.values(unread_messages).reduce((a: number, b) => a + b, 0),
+    [unread_messages],
+  );
 
   useEffect(() => {
     if (isAuth) {
@@ -37,8 +45,13 @@ const JoobSeekerRootPage = () => {
             <NavLink to="search-map" className="pointer mr-20">
               <LocationIcon />
             </NavLink>
-            <NavLink to={user ? 'account' : 'auth'} className="pointer">
+            <NavLink to={user ? 'account' : 'auth'} className="pointer relative">
               {user?.photo ? <Image class_name="br-15 w-30 h-30" src={user.photo} /> : <PersonIcon />}
+              {unread_count ? (
+                <Text white class_name="notification_count w-16 h-16 br-8 bg-red t-align-center" Small>
+                  {unread_count}
+                </Text>
+              ) : null}
             </NavLink>
           </View>
         </View>

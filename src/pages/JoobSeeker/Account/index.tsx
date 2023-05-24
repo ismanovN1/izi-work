@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import View from 'components/custom-components/View';
 import AccountCard from 'components/account-components/account-card';
 import Text from 'components/custom-components/Text';
 import Button from 'components/custom-components/Button';
 
+import ChatIcon from 'assets/icons/chat-icon.svg';
 import CreateResumeIcon from 'assets/icons/create-resume-icon.svg';
 import MyResponseIcon from 'assets/icons/my-response-icon.svg';
 import FavoriteIcon from 'assets/icons/favorite-icon-white.svg';
@@ -20,7 +21,13 @@ const Account = () => {
   const dispatch = useAppDispatch();
   const { resume } = useAppSelector((state) => state.resume);
   const { isAuth } = useAppSelector((state) => state.auth);
+  const { unread_messages } = useAppSelector((state) => state.chat);
   const { loadings } = useAppSelector((state) => state.common);
+
+  const unread_count = useMemo(
+    () => Object.values(unread_messages).reduce((a: number, b) => a + b, 0),
+    [unread_messages],
+  );
 
   useEffect(() => {
     if (!isAuth) {
@@ -34,9 +41,7 @@ const Account = () => {
     <View width="100%" height="clac(100vh - 65px)" class_name="ph-20u pt-20 pb-80 fdc ovf-y-auto">
       <AccountCard />
 
-      <Text SubtitleBlack class_name="mt-22 mb-12">
-        Мои объявления
-      </Text>
+      <Text SubtitleBlack class_name="mt-22 mb-12"></Text>
       <Button
         loading={loadings[GET_MY_RESUME]}
         leftIcon={resume ? <ResumeIcon /> : <CreateResumeIcon />}
@@ -51,6 +56,14 @@ const Account = () => {
         onClick={() => navigate('/vacancies?mode=MY_RESPONSES')}
       >
         Мои отклики
+      </Button>
+      <Button leftIcon={<ChatIcon />} class_name="mb-20" bg={'grey'} onClick={() => navigate('/chat-list')}>
+        Моя переписка
+        {unread_count ? (
+          <Text white class_name="w-22 h-22 br-11 pt-3 bg-red ml-20 t-align-center" Small>
+            {unread_count}
+          </Text>
+        ) : null}
       </Button>
       <Button leftIcon={<FavoriteIcon />} bg={'red'} onClick={() => navigate('/vacancies?mode=FAVORITES')}>
         Избранное

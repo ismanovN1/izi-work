@@ -41,7 +41,7 @@ export const get_my_chats_thunk = () => async (dispatch: AppDispatch) => {
         dispatch(
           setCountUnreadMessages(
             res.data?.reduce((acc, item) => {
-              if (item.unread_count_e) return { ...acc, [item._id]: item.unread_count_e };
+              if (item.unread_count_w) return { ...acc, [item._id]: item.unread_count_w };
 
               return acc;
             }, {}),
