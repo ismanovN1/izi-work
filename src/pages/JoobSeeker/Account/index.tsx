@@ -58,7 +58,10 @@ const Account = () => {
         Мои отклики
       </Button>
       <Button leftIcon={<ChatIcon />} class_name="mb-20" bg={'grey'} onClick={() => navigate('/chat-list')}>
-        Моя переписка
+        <Text Button class_name="t-align-center">
+          Моя переписка
+        </Text>
+
         {unread_count ? (
           <Text white class_name="w-22 h-22 br-11 pt-3 bg-red ml-20 t-align-center" Small>
             {unread_count}
