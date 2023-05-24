@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import { API_URL } from 'api/init';
+import { API_URL, BASE_URL } from 'api/init';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import React, { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import { addMessage, incCountUnreadMessages, mark_as_read } from 'store/chat-store/chat-slice';
-const url = process.env.NODE_ENV === 'development' ? 'http://localhost:8001' : 'https://izi-work-prod.onrender.com';
 
 const SocketWrapper = ({ children }) => {
   const socket = useRef(null);
@@ -16,7 +15,7 @@ const SocketWrapper = ({ children }) => {
 
   useEffect(() => {
     if (user?._id) {
-      socket.current = io(url, {
+      socket.current = io(BASE_URL, {
         transports: ['websocket'],
         secure: true,
         query: { user_id: user._id },

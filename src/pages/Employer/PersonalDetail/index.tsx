@@ -20,29 +20,43 @@ import ModalCard from 'components/ui/ModalCard';
 import './index.scss';
 
 // Images & Icons
+import FavoriteIcon from 'assets/icons/favorite.svg';
+import FavoriteGreyIcon from 'assets/icons/favorite-grey-large.svg';
 import PromtIcon from 'assets/icons/promt.svg';
 import BackButton from 'components/ui/BackButton';
+import Select from 'components/custom-components/Select';
+import { get_chat_thunk } from 'store/chat-store/chat-thunk';
+import { add_remove_my_favorite_resume_thunk } from 'store/action-store/action-thunk';
 
 const PersonalDetail = () => {
   const { personalId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { isAuth } = useAppSelector((s) => s.auth);
-  const { resumes } = useAppSelector((s) => s.resume);
+  const { isAuth, user } = useAppSelector((s) => s.auth);
+  const { resumes, favorite_resumes } = useAppSelector((s) => s.resume);
+  const { my_active_vacancies } = useAppSelector((s) => s.vacancies);
   const { loadings, categories } = useAppSelector((s) => s.common);
 
   const [personal, setPersonal] = useState<any>();
   const [warning, setWarning] = useState('');
+  const [openSelectModal, setOpenSelectModal] = useState(false);
+  const [selectedVacancy, setSelectedVacancy] = useState<any>();
 
   const randomPersonal1 = useMemo(() => resumes[Math.ceil(Math.random() * (resumes.length - 1))], [personalId]);
-  const randomPersonal2 = useMemo(() => resumes[Math.ceil(Math.random() * (resumes.length - 1))], [personalId]);
+  const randomPersonal2 = useMemo(() => resumes[Math.round(Math.random() * (resumes.length - 1))], [personalId]);
 
   useEffect(() => {
     if (personalId) {
       dispatch(get_resume_by_id_thunk(personalId, (res) => setPersonal(res)));
     }
   }, [personalId]);
+
+  const is_favorite = favorite_resumes.includes(personalId);
+
+  const go_to_chat = (chatId: string) => {
+    navigate(`/chat/${chatId}`);
+  };
 
   return (
     <View
@@ -69,8 +83,15 @@ const PersonalDetail = () => {
         ) : personal ? (
           <View class_name="d-flex jcsb full-width mt-40u ">
             <View card class_name="flex-1 p-20u relative d-flex jcsb waiter-detail">
-              <View class_name="absolute pointer" top={10} right={15}>
-                ☆
+              <View
+                class_name={`absolute pointer ${isAuth ? '' : 'd-none'}`}
+                top={10}
+                right={15}
+                onClick={() => {
+                  dispatch(add_remove_my_favorite_resume_thunk({ resume_id: personalId, is_favorite: !is_favorite }));
+                }}
+              >
+                {is_favorite ? <FavoriteIcon /> : <FavoriteGreyIcon />}
               </View>
               <View class_name="fdc mr-30u image-container">
                 <View class_name={'br-10 ovf-hidden'}>
@@ -83,6 +104,8 @@ const PersonalDetail = () => {
                   onClick={() => {
                     if (!isAuth) {
                       setWarning('Написать');
+                    } else {
+                      setOpenSelectModal(true);
                     }
                   }}
                 >
@@ -130,14 +153,14 @@ const PersonalDetail = () => {
             </View>
             <View class_name="fdc ml-22u d-none-on-mobile">
               <Text BodyB>Похожие вакансии</Text>
-              {randomPersonal1 ? (
+              {randomPersonal1 && randomPersonal1._id !== personalId ? (
                 <PersonalCard
                   class_name="mv-19u"
                   person={randomPersonal1}
                   onClick={() => navigate(`/personals/${randomPersonal1._id}`)}
                 />
               ) : null}
-              {randomPersonal2 ? (
+              {randomPersonal2 && randomPersonal1?._id !== randomPersonal1?._id ? (
                 <PersonalCard
                   class_name="mb-19u"
                   person={randomPersonal2}
@@ -158,6 +181,45 @@ const PersonalDetail = () => {
           >{`Что бы ${warning}, Вам необходимо пройти первичную регистрацию и создать резюме `}</Text>
           <Button bg="red" onClick={() => navigate('/account/registr')}>
             Регистрация
+          </Button>
+        </View>
+      </ModalCard>
+      <ModalCard
+        visible={openSelectModal}
+        onClose={() => {
+          setOpenSelectModal(false);
+          setSelectedVacancy(undefined);
+        }}
+        title=""
+      >
+        <View class_name="full-width fdc aic ais p-40">
+          <Text BodyB>Выберите вакансию на должность, на которую вы ищете сотрудника</Text>
+          <Select
+            class_name="mv-40"
+            placeholder="Выберите вакансию"
+            value={selectedVacancy}
+            onChange={(val) => setSelectedVacancy(val)}
+            options={my_active_vacancies.map((item) => ({ _id: item._id, name: item.category_name }))}
+          />
+          <Button
+            disabled={!selectedVacancy || !personal._id || !user._id}
+            onClick={() => {
+              if (selectedVacancy?._id && user._id && personal._id && personal.owner_id?._id) {
+                dispatch(
+                  get_chat_thunk(
+                    {
+                      resume_id: personal._id,
+                      waiter_id: personal.owner_id?._id,
+                      employer_id: user._id,
+                      vacancy_id: selectedVacancy?._id,
+                    },
+                    go_to_chat,
+                  ),
+                );
+              }
+            }}
+          >
+            Написать
           </Button>
         </View>
       </ModalCard>

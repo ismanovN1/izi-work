@@ -25,13 +25,15 @@ export const ChatInput: React.FC<any> = () => {
 
   return (
     <View class_name="chat-footer ph-20u">
-      <Input
-        class_name="f-grow-1"
-        placeholder="Написать сообщение"
-        value={value}
-        disabled={loadings[CREATE_MESSAGE]}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <View class_name="f-grow-1">
+        <Input
+          class_name="full-width"
+          placeholder="Написать сообщение"
+          value={value}
+          disabled={loadings[CREATE_MESSAGE]}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </View>
       <View
         class_name={`send-button ${value && current_chat?._id && !loadings[CREATE_MESSAGE] ? '' : 'disabled'}`}
         onClick={() => {
