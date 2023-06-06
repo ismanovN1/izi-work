@@ -91,7 +91,14 @@ module.exports = {
   devServer: {
     port: 3001,
     hot: true,
+    https: false,
     historyApiFallback: true,
+    proxy: {
+      '/': {
+        target: 'http://www.example.com',
+        changeOrigin: true,
+      },
+    },
   },
   mode: production ? 'production' : 'development',
 };

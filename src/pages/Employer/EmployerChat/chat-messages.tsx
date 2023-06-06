@@ -32,7 +32,7 @@ export const ChatMessages: React.FC<any> = () => {
   const FirstMessage = useCallback(() => {
     const message = messages[messages.length - 1];
     const vacancy = current_chat?.vacancy_id || {};
-    const MessageComponent = user._id === message._id ? MyMessage : MeMessage;
+    const MessageComponent = user._id === message.user_id ? MyMessage : MeMessage;
     return (
       <MessageComponent
         for_employer
