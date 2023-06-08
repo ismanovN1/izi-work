@@ -3,10 +3,10 @@ import { getErrorMessage } from 'helpers/common';
 import https from 'https';
 
 export const BASE_URL =
-  process.env.NODE_ENV === 'development' ? 'http://185.146.3.221:3003/' : 'http://185.146.3.221:3003/';
+  process.env.NODE_ENV === 'development' ? 'https://api.iziwork.kz:3003/' : 'https://api.iziwork.kz:3003/';
 
 export const API_URL =
-  process.env.NODE_ENV === 'development' ? 'http://185.146.3.221:3003/api/' : 'http://185.146.3.221:3003/api/';
+  process.env.NODE_ENV === 'development' ? 'https://api.iziwork.kz:3003/api/' : 'https://api.iziwork.kz:3003/api/';
 
 export const instance = axios.create({
   baseURL: API_URL,
