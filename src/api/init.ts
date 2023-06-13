@@ -2,10 +2,10 @@ import { getErrorMessage } from 'helpers/common';
 import axios, { AxiosRequestConfig } from 'axios';
 
 export const BASE_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : 'http://185.146.3.221:3003/';
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : 'https://api.iziwork.kz:3003/';
 
 export const API_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/api/' : 'http://185.146.3.221:3003/api/';
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8001/api/' : 'https://api.iziwork.kz:3003/api/';
 
 export const instance = axios.create({
   baseURL: API_URL,

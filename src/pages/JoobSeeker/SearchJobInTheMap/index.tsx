@@ -13,6 +13,7 @@ import 'rc-slider/assets/index.css';
 import { useAppSelector } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import { CSlider } from './slider';
+import { formatSalary, parseSalaryPeriod } from 'helpers/common';
 
 const SearchJobInTheCard = () => {
   const navigate = useNavigate();
@@ -88,12 +89,24 @@ const SearchJobInTheCard = () => {
               setTemplate(ympasInstance.templateLayoutFactory.createClass);
               setMark(current_coordinates || [43.2220146, 76.8512485]);
             }}
-            modules={['templateLayoutFactory', 'layout.ImageWithContent', 'Placemark', 'geocode']}
+            modules={[
+              'templateLayoutFactory',
+              'layout.ImageWithContent',
+              'Placemark',
+              'geoObject.addon.hint',
+              'geocode',
+            ]}
           >
             {vacancies_nearby?.map((item) => (
               <Placemark
                 key={item._id}
                 onClick={() => navigate(`/vacancies/${item._id}`)}
+                properties={{
+                  hintContent: `<b>${item.category_name || '-'}</b><br/><span>${formatSalary(
+                    item.salary_from,
+                    item.salary_to,
+                  )}</span>`,
+                }}
                 geometry={[...(item.location?.coordinates || [])].reverse()}
               />
             ))}
