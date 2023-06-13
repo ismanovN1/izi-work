@@ -5,6 +5,7 @@ interface CategoryI {
   _id: string;
   name: string;
   icon: string;
+  default_image: string;
   children: Array<{ _id: string; name: string }>;
 }
 

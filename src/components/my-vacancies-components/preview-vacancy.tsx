@@ -7,7 +7,7 @@ import Image from 'components/custom-components/Image';
 import { Map, Placemark, YMaps } from 'react-yandex-maps';
 
 // Helpers
-import { formatSalary, get_def_images, screen_height } from 'helpers/common';
+import { formatSalary, screen_height } from 'helpers/common';
 
 // Images & Icons
 import Pen from 'assets/icons/pen.svg';
@@ -56,6 +56,11 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
     dispatch(update_vacancy_thunk({ status: 'CLOSED' }, vacancy._id));
   };
 
+  const restoreVacancy = () => {
+    dispatch(removeError(UPDATE_VACANCY));
+    dispatch(update_vacancy_thunk({ status: 'ACTIVE' }, vacancy._id));
+  };
+
   const RenderRow: React.FC<{ title: string; children: string; mb?: number; mt?: number }> = ({
     title,
     mb,
@@ -100,7 +105,7 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
       <View card minHeight={screen_height * 0.82} class_name="d-flex  p-20 preview-vacancy">
         <View width={510} class_name="mr-20 ">
           <Image
-            src={vacancy?.photo || get_def_images(vacancy.category._id)}
+            src={vacancy?.photo || category?.default_image}
             width={510}
             height={230}
             fit="cover"
@@ -178,11 +183,14 @@ const PreviewVacancy: React.FC<propsType> = ({ vacancy, setEditMode }) => {
               Просмотр отклика
             </Button>
           ) : null}
-          {vacancy.status === 'ACTIVE' ? (
-            <Button bg="red" class_name="mt-10" onClick={closeVacancy} loading={loadings[UPDATE_VACANCY]}>
-              Закрыть вакансию
-            </Button>
-          ) : null}
+          <Button
+            bg="red"
+            class_name="mt-10"
+            onClick={vacancy.status === 'ACTIVE' ? closeVacancy : restoreVacancy}
+            loading={loadings[UPDATE_VACANCY]}
+          >
+            {vacancy.status === 'ACTIVE' ? 'Закрыть' : 'Восстановить'} вакансию
+          </Button>
         </View>
       </View>
     </>

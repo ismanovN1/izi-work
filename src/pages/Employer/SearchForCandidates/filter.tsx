@@ -28,7 +28,7 @@ const Filter: React.FC<any> = ({ go_to, mode, show_nearby, candidate_id, setMode
   };
 
   useEffect(() => {
-    const cc = categories.find((item) => item._id === filter_params.category_id);
+    const cc = categories.find((item) => item._id === filter_params?.category_id);
     if (cc) {
       setCategory({ _id: cc._id, name: cc.name });
     } else setCategory(undefined);

@@ -15,9 +15,11 @@ import chat_image from 'assets/images/chat.png';
 import { useNavigate } from 'react-router-dom';
 
 import './index.scss';
+import { useAppSelector } from 'hooks';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { isAuth } = useAppSelector((s) => s.auth);
 
   return (
     <View class_name="full-width relative fdc aic ovf-x-hidden home-landing">
@@ -40,7 +42,7 @@ const Home = () => {
               bg="white"
               width={275}
               class_name="button_white_shadow mt-54"
-              onClick={() => navigate('personals')}
+              onClick={() => navigate('/personals')}
             >
               Нанять
             </Button>
@@ -59,7 +61,7 @@ const Home = () => {
             <Text SubtitleL class_name="mt-12 mb-4">
               Когда сотрудник не тратит много времени что бы добраться до работы — это удобно всем!
             </Text>
-            <Button width={275} class_name="button_white_shadow mt-54">
+            <Button width={275} class_name="button_white_shadow mt-54" onClick={() => navigate('/personals')}>
               Найти сейчас
             </Button>
           </View>
@@ -74,7 +76,11 @@ const Home = () => {
               Знакомьтесь, задавайте вопросы и общайтесь со своими кандидатами внутри платформы – это экономит ваше
               время!
             </Text>
-            <Button width={275} class_name="button_white_shadow mt-54">
+            <Button
+              width={275}
+              class_name="button_white_shadow mt-54"
+              onClick={() => (isAuth ? navigate('/serach-candidates') : navigate('/account/registr'))}
+            >
               Присоедениться
             </Button>
           </View>

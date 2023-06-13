@@ -1,5 +1,5 @@
 import View from 'components/custom-components/View';
-import { screen_height } from 'helpers/common';
+import { formatSalary, parseSalaryPeriod, screen_height } from 'helpers/common';
 import { useAppSelector } from 'hooks';
 import React from 'react';
 import { Map, YMaps, Placemark } from 'react-yandex-maps';
@@ -10,11 +10,7 @@ import placemarkC from 'assets/icons/placemark-c.png';
 const MapForCandidates = ({ currentPosition, myPosition, setSearchParams }: any, mapRef) => {
   const { resumes } = useAppSelector((s) => s.resume);
   return (
-    <View
-      class_name="br-8 f-shrink-1 ovf-hidden bg-light-grey map-inner-container"
-      height="calc(100vh - 180px)"
-      width={808}
-    >
+    <View class_name="br-8 ovf-hidden bg-light-grey map-inner-container" height="calc(100vh - 180px)" width={'100%'}>
       <YMaps>
         <Map
           instanceRef={(ref) => (mapRef.current = ref)}
@@ -49,7 +45,10 @@ const MapForCandidates = ({ currentPosition, myPosition, setSearchParams }: any,
               }}
               properties={{
                 hintContent: `<b>${item.name || '-'}</b><br/><span>${item.category_name}</span>`,
-                balloonContent: '<div class="card mb-12 p-10 br-4"></div>',
+                balloonContent: `<div class=" p-10 "><span>${formatSalary(
+                  item.salary_from,
+                  item.salary_to,
+                )} ${parseSalaryPeriod(item.salary_period)}</span></div>`,
               }}
             />
           ))}

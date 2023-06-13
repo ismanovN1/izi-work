@@ -6,6 +6,9 @@ import { checkObjValue } from 'helpers/common';
 
 // Styles
 import './index.scss';
+import { useState } from 'react';
+import { ClockLoader } from 'react-spinners';
+import no_image from 'assets/icons/no-image.jpg';
 
 type propsType = {
   width?: string | number;
@@ -28,13 +31,20 @@ const Image: React.FC<propsType & React.ImgHTMLAttributes<HTMLImageElement>> = (
   ...restProps
 }) => {
   const style_memo = useMemo(() => checkObjValue({ width, height }), [width, height]);
+  const [status, setStatus] = useState('PENDING');
 
   const class_name_memo = useMemo(() => `fit-${fit} ${class_name}`, [class_name, fit]);
+
+  if (status === 'ERROR')
+    return (
+      <img src={no_image} alt={alt} className={class_name_memo} style={{ ...style_memo, ...style }} {...restProps} />
+    );
 
   return (
     <img
       src={!src?.name ? src : URL.createObjectURL(src)}
       alt={alt}
+      onError={() => setStatus('ERROR')}
       className={class_name_memo}
       style={{ ...style_memo, ...style }}
       {...restProps}

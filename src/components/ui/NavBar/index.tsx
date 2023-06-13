@@ -35,7 +35,7 @@ const close_menu = () => {
 const NavBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuth } = useAppSelector((state) => state.auth);
+  const { isAuth, user } = useAppSelector((state) => state.auth);
   const { unread_messages } = useAppSelector((state) => state.chat);
   const vacancies = useAppSelector((s) => s.vacancies);
 
@@ -110,12 +110,19 @@ const NavBar = () => {
                 </Text>
               </NavLink>
               <View width={1} height={70} class_name="bg-light-grey mh-70" />
-              <NavLink to="/account/auth" className="ml-7 pointer d-flex aic">
+              <div
+                className="ml-7 pointer d-flex aic"
+                onClick={() => {
+                  window.open(
+                    `mailto:edik_osipov@mail.ru?subject=Поддержка&body=%0A%0A%0A========================================%0AИмя:%20${user.name}%0AEmail:%20${user.email}%0AТелефон:%20+${user.phone}`,
+                  );
+                }}
+              >
                 <HeadphoneIcon />
                 <Text DescriptionB black class_name="ml-7 mt-5">
                   Поддержка
                 </Text>
-              </NavLink>
+              </div>
               <View
                 class_name="ml-40 pointer center"
                 onClick={() => {

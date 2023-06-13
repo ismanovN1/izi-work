@@ -60,7 +60,10 @@ const MyVacaciesCreate = () => {
   const [createVacancy, setCreateVacancy] = useState(false);
   const [preview, setPreview] = useState(false);
   const [step, setStep] = useState(1);
-  const [fields, setFields] = useState<Partial<VacancyI>>({});
+  const [fields, setFields] = useState<Partial<VacancyI>>({
+    salary: { period: 'PER_MONTH' },
+    schedule: { shedule: 'FULL_TIME' },
+  });
 
   const clear = () => {
     setStep(1);
@@ -105,6 +108,7 @@ const MyVacaciesCreate = () => {
       circumstances: fields.about.circumstances,
       get_started_right_away: fields.schedule.get_started_right_away,
       shift_work: fields.schedule.shift_work,
+      shedule: fields.schedule.shedule,
       salary_from: fields.salary?.from,
       salary_to: fields.salary?.to,
       salary_period: fields.salary?.period,

@@ -12,6 +12,7 @@ import { formatSalary, uw } from 'helpers/common';
 import './index.scss';
 import Text from 'components/custom-components/Text';
 import { isMobile } from 'react-device-detect';
+import Image from 'components/custom-components/Image';
 
 type propsType = {
   person?: any;
@@ -21,13 +22,15 @@ type propsType = {
 };
 
 const PersonalCard: React.FC<propsType> = ({ person, onClick, index = 3, class_name }) => {
+  console.log(person);
+
   return (
     <View
       class_name={`personal-card ${isMobile ? '' : (index + 1) % 4 === 0 ? '' : 'mr-10'} ${class_name}`}
       onClick={onClick}
     >
       <div className="img">
-        <img src={person.picture || 'https://cdn-icons-png.flaticon.com/512/174/174369.png'} alt="person" />
+        <Image src={person.picture} alt="person" />
       </div>
       <View class_name=" d-flex fdc mt-20u mb-25u">
         <Text DescriptionBlack>{person.name || '-'}</Text>

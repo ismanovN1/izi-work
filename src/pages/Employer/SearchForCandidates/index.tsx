@@ -50,7 +50,11 @@ const SearchCandidates = () => {
   }, [setSearchParams]);
 
   useEffect(() => {
-    dispatch(get_resumes_thunk(checkObjValue(filter_params)));
+    const id = setTimeout(() => {
+      dispatch(get_resumes_thunk(checkObjValue(filter_params)));
+    }, 500);
+
+    return () => clearTimeout(id);
   }, [filter_params]);
 
   useEffect(() => {
@@ -115,9 +119,11 @@ const SearchCandidates = () => {
         </View>
       </View>
       <View
-        class_name={`fdc  pl-20 pr-10 map-container ${mode !== 'MAP' ? 'd-none' : ''} ${
+        class_name={`fdc f-grow-1  pl-20 pr-10 map-container ${mode !== 'MAP' ? 'd-none' : ''} ${
           candidate_id ? 'd-none-on-mobile' : ''
         }`}
+        width="calc(100vw - 810px)"
+        maxWidth={808}
       >
         <Button
           type="outline"
@@ -127,7 +133,7 @@ const SearchCandidates = () => {
         >
           Фильтр
         </Button>
-        <View class_name="h-60 d-flex aic">
+        <View class_name="h-60 d-flex aic f-shrink-1">
           <Text SubtitleB>Найди сотрудника рядом с офисом</Text>
         </View>
         <MapForCandidates
