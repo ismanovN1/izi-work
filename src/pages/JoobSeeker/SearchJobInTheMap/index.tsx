@@ -22,7 +22,6 @@ const SearchJobInTheCard = () => {
   const ymaps = useRef(null);
   const placemarkRef = useRef<any>(null);
 
-  const [template, setTemplate] = useState<any>();
   const [current_coordinates, set_current_coordinates] = useState<any>();
 
   const { resume } = useAppSelector((state) => state.resume);
@@ -31,6 +30,16 @@ const SearchJobInTheCard = () => {
   useEffect(() => {
     set_current_coordinates(resume?.address?.coords || [43.2220146, 76.8512485]);
   }, [resume]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { coords } = position;
+      if (coords) {
+        set_current_coordinates([coords.latitude, coords.longitude]);
+        setMark([coords.latitude, coords.longitude]);
+      }
+    });
+  }, []);
 
   const createPlacemark = (coords: any): any => {
     if (!ymaps.current) return null;
@@ -86,7 +95,6 @@ const SearchJobInTheCard = () => {
             onClick={onMapClick}
             onLoad={(ympasInstance) => {
               ymaps.current = ympasInstance;
-              setTemplate(ympasInstance.templateLayoutFactory.createClass);
               setMark(current_coordinates || [43.2220146, 76.8512485]);
             }}
             modules={[
